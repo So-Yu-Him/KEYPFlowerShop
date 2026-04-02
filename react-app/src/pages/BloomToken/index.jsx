@@ -66,7 +66,7 @@ export const FLOWER_PRODUCTS = [
     totalStock: 5,
     rarity: 'Rare',
     tags: ['rare', 'collectible'],
-    description: 'Only 5 on-chain orchid NFT vouchers minted worldwide. Redeem for a hand-cultivated Phalaenopsis orchid, or hold as a premium digital collectible. Artist-signed certificate included.',
+    description: 'Only 5 orchid voucher editions in this demo collection. Redeem for a hand-cultivated Phalaenopsis orchid, or keep as a premium digital collectible concept. Artist-signed certificate included.',
   },
   {
     id: 5,
@@ -90,7 +90,7 @@ export const FLOWER_PRODUCTS = [
     totalStock: 1,
     rarity: 'Legendary',
     tags: ['legendary', 'auction'],
-    description: 'The genesis legendary collectible. 1 of 1 worldwide. Gold-preservation process, mounted in a custom crystal display box. Ships with an on-chain certificate of authenticity and a physical notarised copy.',
+    description: 'The genesis legendary collectible. 1 of 1 worldwide. Gold-preservation process, mounted in a custom crystal display box. Includes a demo digital certificate of authenticity and a physical notarised copy.',
   },
 ]
 
@@ -158,7 +158,7 @@ function BloomToken() {
           <h1>Bloom<span>Token</span></h1>
           <p className="hero-tagline">
             Pre-purchase flower coupon tokens and redeem a dozen fresh blooms
-            anytime within 12 months — secured by smart contracts on Polygon.
+            anytime within 12 months — modeled with conceptual smart-contract flows.
           </p>
 
           <button
@@ -213,7 +213,7 @@ function BloomToken() {
           <div style={{ width: '100%' }}>
             <div className="section-header">
               <h2>🌸 Available Flowers</h2>
-              <p>Each token is redeemable for fresh flowers · Minted on Polygon</p>
+              <p>Each token is redeemable for fresh flowers · Demo catalog with token-style metadata</p>
             </div>
 
             {/* Rarity filter */}
@@ -297,9 +297,9 @@ function BloomToken() {
             </div>
             <div className="steps-grid">
               {[
-                { icon: '💳', step: 'Step 1', title: 'Connect & Buy',      desc: 'Connect your MetaMask and purchase BloomTokens using eHKD, USDC, Bitcoin, or FPS. AML screening runs on your public key.' },
-                { icon: '🌹', step: 'Step 2', title: 'Redeem Anytime',    desc: 'Ready for your flowers? Redeem a token and the smart contract automatically routes payment to the supplier, courier, and florist.' },
-                { icon: '🚚', step: 'Step 3', title: 'Delivered to You',  desc: 'After delivery is confirmed via oracle, remaining funds are released to the florist. Unused tokens auto-settle after 12 months.' },
+                { icon: '💳', step: 'Step 1', title: 'Connect & Buy',      desc: 'Connect your MetaMask and run a simulated BloomToken purchase flow with demo payment options.' },
+                { icon: '🌹', step: 'Step 2', title: 'Redeem Anytime',    desc: 'Ready for your flowers? In this prototype, redemption and settlement are illustrated directly in the UI flow.' },
+                { icon: '🚚', step: 'Step 3', title: 'Delivered to You',  desc: 'Delivery and settlement timing is shown as a conceptual process for learning and presentation.' },
               ].map((s) => (
                 <div key={s.step} className="step-card">
                   <span className="step-icon">{s.icon}</span>

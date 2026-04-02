@@ -537,7 +537,7 @@
 <nav>
     <div class="nav-brand">🌸 BloomToken</div>
     <div class="nav-right">
-        <span id="network-badge">Polygon</span>
+        <span id="network-badge">Demo</span>
         <span id="address-display">Public Address after login</span>
         <button id="connect-btn-nav" onclick="connectWallet()">Connect Wallet</button>
     </div>
@@ -600,19 +600,19 @@
             <span class="step-icon">💳</span>
             <div class="step-number">Step 1</div>
             <h3>Connect &amp; Buy</h3>
-            <p>Connect your MetaMask wallet and purchase BloomTokens for $15 each using eHKD, USDC, Bitcoin, or via FPS. AML check is performed on your public key.</p>
+            <p>Connect your MetaMask wallet and simulate purchasing BloomTokens for $15 each using eHKD, USDC, Bitcoin, or FPS options.</p>
         </div>
         <div class="step-card">
             <span class="step-icon">🌹</span>
             <div class="step-number">Step 2</div>
             <h3>Redeem Anytime</h3>
-            <p>When you're ready, redeem your token for a dozen fresh roses. The smart contract automatically routes payment to the supplier, courier, and florist.</p>
+            <p>When you're ready, redeem your token for a dozen fresh roses. Supplier, courier, and florist settlement is represented as a conceptual flow.</p>
         </div>
         <div class="step-card">
             <span class="step-icon">🚚</span>
             <div class="step-number">Step 3</div>
             <h3>Delivered to You</h3>
-            <p>After the courier confirms delivery via oracle, the remaining funds are released to the florist. Unused tokens expire and auto-settle after 12 months.</p>
+            <p>After delivery confirmation in the demo flow, remaining funds are shown as released to the florist. Unused tokens follow a simulated 12-month expiry path.</p>
         </div>
     </div>
 </section>
@@ -621,7 +621,7 @@
 <section class="section">
     <div class="section-header">
         <h2>Token Details</h2>
-        <p>BloomToken (BLMT) — a fungible ERC-20 prepaid coupon token on Polygon</p>
+        <p>BloomToken (BLMT) — a demo ERC-20 style prepaid coupon model</p>
     </div>
     <div class="token-grid">
         <div class="token-card">
@@ -636,8 +636,8 @@
         </div>
         <div class="token-card">
             <div class="token-card-label">Blockchain</div>
-            <div class="token-card-value">Polygon</div>
-            <div class="token-card-sub">Low-fee, eco-friendly PoS</div>
+            <div class="token-card-value">Demo Network</div>
+            <div class="token-card-sub">Concept inspired by Polygon architecture</div>
         </div>
         <div class="token-card">
             <div class="token-card-label">Token Expiry</div>
@@ -651,8 +651,8 @@
         </div>
         <div class="token-card">
             <div class="token-card-label">Smart Contract</div>
-            <div class="token-card-value" style="font-size:0.95rem;">Deployed via Thirdweb</div>
-            <div class="token-card-sub">Polygon Mumbai Testnet</div>
+            <div class="token-card-value" style="font-size:0.95rem;">Prototype via Thirdweb</div>
+            <div class="token-card-sub">No live contract deployment in this page</div>
         </div>
     </div>
 
@@ -686,16 +686,16 @@
 <!-- ══ SMART CONTRACT FLOW ══ -->
 <section class="section section-alt">
     <div class="section-header">
-        <h2>Smart Contract Flow</h2>
-        <p>Every dollar is automatically distributed on-chain — no middlemen, full transparency</p>
+        <h2>Settlement Flow (Conceptual)</h2>
+        <p>This sequence illustrates a possible contract-style flow for demo and classroom discussion</p>
     </div>
     <div class="flow-container">
 
         <div class="flow-step">
             <div class="flow-icon-wrap">🛒</div>
             <div class="flow-content">
-                <h4>Buyer Purchases Token ($15 held in escrow)</h4>
-                <p>$15 locked in the smart contract. Buyer's public key passes AML screening via Chainalysis. BLMT token minted and sent to buyer's wallet.</p>
+                <h4>Buyer Purchases Token ($15 demo escrow step)</h4>
+                <p>The interface simulates escrow allocation, compliance checks, and token issuance as conceptual workflow stages.</p>
             </div>
         </div>
         <div class="flow-connector"></div>
@@ -704,7 +704,7 @@
             <div class="flow-icon-wrap">🌹</div>
             <div class="flow-content">
                 <h4>Token Redeemed for Flowers</h4>
-                <p>Smart contract immediately releases: <strong>$5 → flower supplier</strong>, <strong>$2 → courier</strong>. Remaining $8 stays in escrow pending delivery.</p>
+                <p>The demo shows an example release split: <strong>$5 → flower supplier</strong>, <strong>$2 → courier</strong>, with remaining funds pending delivery.</p>
             </div>
         </div>
         <div class="flow-connector"></div>
@@ -712,8 +712,8 @@
         <div class="flow-step">
             <div class="flow-icon-wrap">📦</div>
             <div class="flow-content">
-                <h4>Oracle Confirms Delivery</h4>
-                <p>Courier marks delivery complete off-chain. Chainlink oracle triggers the smart contract. <strong>$7.55 released to florist</strong>, <strong>$0.45 platform fee</strong> retained.</p>
+                <h4>Delivery Confirmation (Concept)</h4>
+                <p>Courier delivery confirmation is represented as a conceptual event in UI. The sample payout shown is <strong>$7.55 to florist</strong> and <strong>$0.45 platform fee</strong>.</p>
             </div>
         </div>
         <div class="flow-connector"></div>
@@ -722,7 +722,7 @@
             <div class="flow-icon-wrap">⏰</div>
             <div class="flow-content">
                 <h4>Token Expires After 12 Months</h4>
-                <p>If unredeemed, the contract auto-releases <strong>$14.55 to the florist</strong> and retains <strong>$0.45 platform fee</strong>. No manual action required.</p>
+                <p>If unredeemed, the demo applies a sample expiry settlement: <strong>$14.55 to florist</strong> and <strong>$0.45 platform fee</strong>.</p>
             </div>
         </div>
 
@@ -731,7 +731,7 @@
 
 <!-- ══ FOOTER ══ -->
 <footer>
-    <p>© Copyright <strong>BloomToken</strong> · Powered by <a href="https://thirdweb.com" target="_blank">Thirdweb</a> · Built on Polygon · <a href="https://github.com" target="_blank">GitHub</a></p>
+    <p>© Copyright <strong>BloomToken</strong> · Powered by <a href="https://thirdweb.com" target="_blank">Thirdweb</a> · Polygon-inspired concept · <a href="https://github.com" target="_blank">GitHub</a></p>
     <p class="footer-sub">This is a Proof of Concept (POC) for academic purposes · Not financial advice · SBIF Assignment</p>
 </footer>
 

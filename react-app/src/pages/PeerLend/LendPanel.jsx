@@ -21,7 +21,7 @@ const PAYMENT_METHODS = ['ETH', 'USDC', 'USDT']
 
 const TX_STAGES = [
   { icon: '✍️', label: 'Awaiting wallet signature...'  },
-  { icon: '🔐', label: 'Depositing into escrow...'      },
+  { icon: '🔐', label: 'Simulating escrow deposit...'   },
   { icon: '⛓️', label: 'Waiting for confirmation...'   },
   { icon: '✅', label: 'Lending position confirmed!'    },
 ]
@@ -106,7 +106,7 @@ function LendPanel({ isOpen, onClose, loan }) {
               Estimated return: <strong style={{ color: 'var(--green)' }}>{totalReturn} ETH</strong> after {loan.duration} days
             </p>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.78rem', marginBottom: '1.75rem' }}>
-              Your position is recorded on Polygon. Repayments will arrive automatically.
+              Demo position recorded in UI. Repayments are simulated for this prototype.
             </p>
             <button className="btn-primary" onClick={handleClose}>Done</button>
           </div>

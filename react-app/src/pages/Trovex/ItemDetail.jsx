@@ -23,7 +23,7 @@ import { useWallet } from '../../context/WalletContext'
 
 const TX_STAGES = [
   { icon: '✍️', label: 'Awaiting wallet signature...' },
-  { icon: '🔐', label: 'Funds sent to escrow...'      },
+  { icon: '🔐', label: 'Running demo escrow step...'   },
   { icon: '⛓️', label: 'Waiting for confirmation...'  },
   { icon: '✅', label: 'Purchase complete!'             },
 ]
@@ -154,7 +154,7 @@ function ItemDetail() {
               }}>
                 {[
                   { label: 'Token ID', value: item.nft       },
-                  { label: 'Network',  value: 'Polygon'      },
+                  { label: 'Network',  value: 'Demo Network' },
                   { label: 'Standard', value: 'ERC-721'      },
                   { label: 'Category', value: item.category  },
                 ].map((x) => (
@@ -214,7 +214,7 @@ function ItemDetail() {
                   {item.condition}
                 </span>
                 <span className="meta-badge meta-green" style={{ padding: '0.35rem 0.85rem', fontSize: '0.78rem' }}>
-                  ✓ AML Verified
+                  ✓ Demo Verification
                 </span>
               </div>
 
@@ -230,14 +230,14 @@ function ItemDetail() {
               </div>
 
               <p style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '0.75rem' }}>
-                Escrow smart contract · Funds held until delivery confirmed
+                Simulated escrow flow · No real funds are locked or transferred
               </p>
             </div>
           </div>
 
           {/* ── Transaction History ── */}
           <div className="tx-history" style={{ marginTop: '3rem' }}>
-            <h4>🔗 On-Chain History</h4>
+            <h4>🧾 Activity History (Demo)</h4>
             {item.history.map((h, i) => (
               <div key={i} className="tx-history-item">
                 <span className="tx-event-label">{h.event}</span>
@@ -298,8 +298,8 @@ function ItemDetail() {
                 </p>
                 <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', marginBottom: '1.75rem' }}>
                   {txType === 'buy'
-                    ? 'NFT ownership transferred to your wallet. Seller will ship within 48 hours.'
-                    : 'Your bid is locked in escrow. Seller has 24 hours to accept.'}
+                    ? 'Demo ownership status updated in the UI. Seller shipping is shown as a sample workflow.'
+                    : 'Your demo bid was submitted in the UI flow. Seller response is simulated.'}
                 </p>
                 <button className="btn-primary" onClick={closeModal}>Done</button>
               </div>

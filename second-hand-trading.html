@@ -858,7 +858,7 @@
 <nav>
     <div class="nav-brand">💎 Trovex</div>
     <div class="nav-right">
-        <span id="network-badge">Polygon</span>
+        <span id="network-badge">Demo</span>
         <span id="address-display">Public Address after login</span>
         <button id="connect-btn-nav" onclick="connectWallet()">Connect Wallet</button>
     </div>
@@ -869,7 +869,7 @@
     <div class="hero-badge">💎 Web3 C2C · ERC-20 + ERC-721 Marketplace</div>
     <h1>Tro<span>vex</span></h1>
     <p class="hero-tagline">
-        Buy and sell second-hand goods peer-to-peer on the blockchain. Every item is minted as an NFT ownership certificate. Payments are held in escrow until delivery is confirmed — no trust needed.
+        Buy and sell second-hand goods peer-to-peer in a prototype marketplace. Each item uses NFT-style ownership metadata and a simulated escrow-style settlement flow.
     </p>
     <button id="hero-connect-btn" onclick="connectWallet()">Connect to Wallet</button>
     <div id="hero-wallet-address">
@@ -914,7 +914,7 @@
 <section class="listings-section section-alt">
     <div class="listings-header">
         <h2>🔥 Featured Listings</h2>
-        <p>All items SSI-verified · Ownership certified as ERC-721 NFT on Polygon</p>
+        <p>Demo identity badges · NFT-style ownership metadata in prototype listings</p>
     </div>
 
     <div class="search-bar-wrap">
@@ -1007,7 +1007,7 @@
     </div>
 
     <div class="view-all-wrap">
-        <button class="view-all-btn" onclick="showToast('📦 Full marketplace — coming soon on Polygon!')">View All 1,248 Listings →</button>
+        <button class="view-all-btn" onclick="showToast('📦 Full marketplace — coming soon in this demo build!')">View All 1,248 Listings →</button>
     </div>
 </section>
 
@@ -1015,32 +1015,32 @@
 <section class="section">
     <div class="section-header">
         <h2>How It Works</h2>
-        <p>Four simple steps from listing your item to getting paid — fully on-chain</p>
+        <p>Four simple steps from listing your item to settlement — shown as a demo workflow</p>
     </div>
     <div class="steps-grid">
         <div class="step-card">
             <span class="step-icon">📦</span>
             <div class="step-number">Step 1</div>
             <h3>List &amp; Mint</h3>
-            <p>Connect your wallet, describe your item, and set a price. AI suggests a market-rate price. An ERC-721 NFT is minted as your item's ownership certificate and deposited into the escrow smart contract.</p>
+            <p>Connect your wallet, describe your item, and set a price. AI suggests a sample market range. The app creates an NFT-style ownership record in the demo listing flow.</p>
         </div>
         <div class="step-card">
             <span class="step-icon">🛒</span>
             <div class="step-number">Step 2</div>
             <h3>Browse &amp; Buy</h3>
-            <p>Buyers browse SSI-verified listings. Purchase is made in eHKD, USDC, eCNY, or via FPS. Payment is locked in smart contract escrow. The NFT ownership certificate is held in the contract pending delivery.</p>
+            <p>Buyers browse listings with demo verification badges. Purchase can be simulated with eHKD, USDC, eCNY, or FPS options. Funds and ownership transfer are represented in a staged UI flow.</p>
         </div>
         <div class="step-card">
             <span class="step-icon">🚚</span>
             <div class="step-number">Step 3</div>
             <h3>Ship &amp; Scan</h3>
-            <p>Seller ships the item with a QR code. Upon delivery, the courier or buyer scans the QR code off-chain. A Chainlink oracle confirms the delivery event on-chain, triggering the next step automatically.</p>
+            <p>Seller ships the item with a QR code. Delivery confirmation is represented as a conceptual off-chain event in the UI to trigger the next demo step.</p>
         </div>
         <div class="step-card">
             <span class="step-icon">✅</span>
             <div class="step-number">Step 4</div>
             <h3>Confirm &amp; Settle</h3>
-            <p>Buyer confirms receipt (or auto-confirms after 7 days). Smart contract releases funds: 97% to seller, 1.5% platform fee, 1.5% dispute reserve. The NFT transfers permanently to the buyer's wallet.</p>
+            <p>Buyer confirms receipt (or auto-confirms after 7 days). The UI demonstrates a sample settlement split: 97% seller payout, 1.5% platform fee, and 1.5% dispute reserve.</p>
         </div>
     </div>
 </section>
@@ -1049,7 +1049,7 @@
 <section class="section section-alt">
     <div class="section-header">
         <h2>Platform Details</h2>
-        <p>Trovex Token (TRVX) — ERC-20 payment token + ERC-721 item NFTs on Polygon</p>
+        <p>Trovex Token (TRVX) — demo ERC-20/721 style model for academic presentation</p>
     </div>
     <div class="token-grid">
         <div class="token-card">
@@ -1064,8 +1064,8 @@
         </div>
         <div class="token-card">
             <div class="token-card-label">Blockchain</div>
-            <div class="token-card-value">Polygon</div>
-            <div class="token-card-sub">Low-fee, eco-friendly PoS</div>
+            <div class="token-card-value">Demo Network</div>
+            <div class="token-card-sub">Concept inspired by Polygon architecture</div>
         </div>
         <div class="token-card">
             <div class="token-card-label">Platform Fee</div>
@@ -1079,15 +1079,15 @@
         </div>
         <div class="token-card">
             <div class="token-card-label">Smart Contract</div>
-            <div class="token-card-value" style="font-size:0.95rem;">Deployed via Thirdweb</div>
-            <div class="token-card-sub">Polygon Mumbai Testnet</div>
+            <div class="token-card-value" style="font-size:0.95rem;">Prototype via Thirdweb</div>
+            <div class="token-card-sub">No live contract deployment in this page</div>
         </div>
     </div>
 
     <!-- List Item Panel — revealed after wallet connect -->
     <div id="list-section">
         <h3>📦 List Your Item</h3>
-        <p class="list-sub">Describe your item · AI prices it · Mint its NFT · Go live on Polygon</p>
+        <p class="list-sub">Describe your item · AI estimates price · Create a demo NFT-style listing</p>
 
         <div class="form-group">
             <label class="form-label">Item Name</label>
@@ -1122,31 +1122,31 @@
                 <div class="trvx-equiv" id="trvx-equiv">≈ — TRVX</div>
             </div>
             <div class="ai-suggestion" id="ai-suggestion" style="display:none;">
-                🤖 AI suggests: HK$<span id="ai-price">—</span> based on recent Polygon listings
+                🤖 AI suggests: HK$<span id="ai-price">—</span> based on demo marketplace data
             </div>
         </div>
 
         <div class="fee-note">
-            💡 Platform fee 1.5% deducted on sale · 1.5% held in dispute reserve for 7 days · Remaining 97% released to your wallet upon buyer confirmation.
+            💡 Example fee model for demo only: 1.5% platform fee · 1.5% dispute reserve · 97% seller payout in simulated settlement.
         </div>
 
-        <button class="list-btn" onclick="listItem()">Mint NFT &amp; List Item →</button>
+        <button class="list-btn" onclick="listItem()">Create Demo Listing →</button>
     </div>
 </section>
 
 <!-- ══ SMART CONTRACT FLOW ══ -->
 <section class="section">
     <div class="section-header">
-        <h2>Smart Contract Flow</h2>
-        <p>Every transaction is automated and auditable on-chain — no human intermediary required</p>
+        <h2>Settlement Flow (Conceptual)</h2>
+        <p>This section illustrates a possible contract-based workflow for demo and classroom discussion</p>
     </div>
     <div class="flow-container">
 
         <div class="flow-step">
             <div class="flow-icon-wrap">🏷️</div>
             <div class="flow-content">
-                <h4>Seller Lists Item — ERC-721 NFT Minted &amp; Escrowed</h4>
-                <p>Seller connects wallet and submits listing. AML check performed on seller's public key via Chainalysis. SSI/ZKP verification confirms seller identity without exposing personal data. An ERC-721 NFT representing item ownership is minted on Polygon and locked in the escrow smart contract. Item goes live on Trovex.</p>
+                <h4>Seller Lists Item — NFT-Style Record Created</h4>
+                <p>Seller connects wallet and submits listing. Identity, AML, and NFT minting are represented as conceptual checks in this prototype rather than live external integrations.</p>
             </div>
         </div>
         <div class="flow-connector"></div>
@@ -1154,8 +1154,8 @@
         <div class="flow-step">
             <div class="flow-icon-wrap">🛒</div>
             <div class="flow-content">
-                <h4>Buyer Purchases — eHKD Locked in Escrow</h4>
-                <p>Buyer pays via eHKD, USDC, eCNY, or FPS (Open Banking API/BaaS). AML check on buyer's wallet. Full purchase amount locked in escrow: <strong>97% reserved for seller</strong>, <strong>1.5% platform fee</strong>, <strong>1.5% dispute reserve</strong>. NFT remains in contract. Seller is notified on-chain to ship the item.</p>
+                <h4>Buyer Purchases — Simulated Escrow Allocation</h4>
+                <p>Buyer payment options and compliance checks are shown as product concepts. The UI models a settlement split of <strong>97% seller</strong>, <strong>1.5% platform fee</strong>, and <strong>1.5% dispute reserve</strong>.</p>
             </div>
         </div>
         <div class="flow-connector"></div>
@@ -1163,8 +1163,8 @@
         <div class="flow-step">
             <div class="flow-icon-wrap">📦</div>
             <div class="flow-content">
-                <h4>Oracle Confirms Delivery — IoT / QR Scan Triggers Release</h4>
-                <p>Courier scans the item's QR code on delivery. The off-chain scan event is submitted to a Chainlink oracle. Oracle writes a signed delivery confirmation to the Polygon smart contract. Contract verifies the oracle signature and marks delivery as complete, unlocking the escrow settlement logic.</p>
+                <h4>Delivery Confirmed — QR Scan Demo Event</h4>
+                <p>Courier scan and oracle confirmation are presented as conceptual integration points. This page simulates delivery confirmation to move the workflow forward.</p>
             </div>
         </div>
         <div class="flow-connector"></div>
@@ -1172,8 +1172,8 @@
         <div class="flow-step">
             <div class="flow-icon-wrap">✅</div>
             <div class="flow-content">
-                <h4>Settlement or DAO Dispute Resolution</h4>
-                <p>Buyer confirms receipt (or auto-confirmation after 7 days): <strong>97% released to seller's wallet</strong>, <strong>1.5% platform fee</strong> retained, <strong>1.5% dispute reserve released to seller</strong>. NFT permanently transferred to buyer's wallet as proof of ownership. If buyer raises a dispute within 7 days, TRVX holders vote via <strong>DAO governance</strong> to adjudicate the outcome and distribute the escrow accordingly.</p>
+                <h4>Settlement or Dispute Handling (Conceptual)</h4>
+                <p>After buyer confirmation, the demo applies the same sample split and updates ownership status in UI. Dispute handling is shown as a governance concept, not an active on-chain vote.</p>
             </div>
         </div>
 
@@ -1184,13 +1184,13 @@
 <section class="section section-alt">
     <div class="section-header">
         <h2>Trust &amp; Protection</h2>
-        <p>Trovex uses five layers of Web3 technology so buyers and sellers can transact without needing to trust each other</p>
+        <p>Trovex shows multiple trust layers as a product concept for safer peer-to-peer transactions</p>
     </div>
     <div class="trust-grid">
         <div class="trust-card">
             <span class="trust-icon">🛡️</span>
-            <h4>AML Screening</h4>
-            <p>Every wallet — buyer and seller — is screened via Chainalysis RegTech before any listing or transaction is approved on-chain.</p>
+            <h4>Compliance Screening (Concept)</h4>
+            <p>Buyer and seller checks are shown as conceptual workflow steps. No live Chainalysis or RegTech API is integrated in this page.</p>
         </div>
         <div class="trust-card">
             <span class="trust-icon">🪪</span>
@@ -1200,22 +1200,22 @@
         <div class="trust-card">
             <span class="trust-icon">🤖</span>
             <h4>AI Fraud Detection</h4>
-            <p>AI algorithms scan listing descriptions, images, and on-chain wallet history to flag counterfeit items, suspicious pricing patterns, and repeat scam addresses before listing.</p>
+            <p>AI fraud checks are represented as a concept. Listing analysis in this demo is illustrative and does not execute production anti-fraud models.</p>
         </div>
         <div class="trust-card">
             <span class="trust-icon">🔗</span>
-            <h4>Chainlink Oracle</h4>
-            <p>Delivery confirmations are processed by decentralised Chainlink oracles. Funds are only released when a cryptographically signed delivery event is verified on-chain.</p>
+            <h4>Delivery Oracle (Concept)</h4>
+            <p>Delivery confirmation is modeled as an oracle-style integration point. Settlement shown on this page is simulated.</p>
         </div>
         <div class="trust-card">
             <span class="trust-icon">⭐</span>
-            <h4>On-Chain Reputation</h4>
-            <p>Every completed trade writes a reputation score update to the blockchain. Scores are permanent, immutable, and visible to all. Bad actors cannot reset their history.</p>
+            <h4>Reputation Layer</h4>
+            <p>Reputation updates are shown in the interface as an example trust mechanism for marketplace design discussions.</p>
         </div>
         <div class="trust-card">
             <span class="trust-icon">⚖️</span>
-            <h4>DAO Dispute Resolution</h4>
-            <p>Disputes are resolved by TRVX token holders via on-chain governance voting. No single party controls the outcome — fully decentralised arbitration replaces traditional customer service.</p>
+            <h4>Governance Dispute Model</h4>
+            <p>Token-holder voting is described as a possible governance approach. It is not wired to a live DAO contract in this demo.</p>
         </div>
     </div>
 
@@ -1224,7 +1224,7 @@
         <div class="eco-icon">🌱</div>
         <div class="eco-content">
             <h4>Every Trade Saves the Planet</h4>
-            <p>Each second-hand transaction on Trovex avoids the carbon cost of manufacturing a new product. Our smart contract automatically records the estimated CO₂ saving on-chain for every trade.</p>
+            <p>Each second-hand transaction can reduce demand for new manufacturing. CO₂ impact numbers here are illustrative demo estimates.</p>
         </div>
         <div class="eco-stats">
             <div class="eco-stat">
@@ -1241,7 +1241,7 @@
 
 <!-- ══ FOOTER ══ -->
 <footer>
-    <p>© Copyright <strong>Trovex</strong> · Powered by <a href="https://thirdweb.com" target="_blank">Thirdweb</a> · Built on Polygon · <a href="https://github.com" target="_blank">GitHub</a></p>
+    <p>© Copyright <strong>Trovex</strong> · Powered by <a href="https://thirdweb.com" target="_blank">Thirdweb</a> · Polygon-inspired concept · <a href="https://github.com" target="_blank">GitHub</a></p>
     <p class="footer-sub">This is a Proof of Concept (POC) for academic purposes · Not financial advice · SBIF Assignment</p>
 </footer>
 
@@ -1375,7 +1375,7 @@
             showToast('🔗 Please connect your wallet to purchase!');
             return;
         }
-        showToast(`🛒 Initiating escrow for ${name} at ${price}…`);
+        showToast(`🛒 Starting demo escrow flow for ${name} at ${price}…`);
 
         // ── TODO: Real Thirdweb escrow contract call ─────────
         // const sdk      = new ThirdwebSDK("polygon");
@@ -1383,7 +1383,7 @@
         // await contract.call("purchaseItem", [itemNftId], { value: price });
         // ────────────────────────────────────────────────────
 
-        setTimeout(() => showToast('✅ Escrow created! Check MetaMask to confirm'), 2200);
+        setTimeout(() => showToast('✅ Demo escrow step completed!'), 2200);
     }
 
     // ─── Pill selectors ──────────────────────────────────────
@@ -1444,7 +1444,7 @@
         }
 
         const trvx = (price / TRVX_RATE).toFixed(1);
-        showToast(`🎨 Minting NFT for "${name}" at HK$${price} (${trvx} TRVX)…`);
+        showToast(`🧪 Creating demo NFT-style listing for "${name}" at HK$${price} (${trvx} TRVX)…`);
 
         // ── TODO: Real Thirdweb NFT mint + listing call ───────
         // const sdk         = new ThirdwebSDK("polygon");
@@ -1452,14 +1452,14 @@
         // await nftContract.mintTo(userAddress, { name, price });
         // ────────────────────────────────────────────────────
 
-        setTimeout(() => showToast('✅ NFT minted! Item is live on Trovex'), 2200);
+        setTimeout(() => showToast('✅ Demo listing created! Item is live on Trovex'), 2200);
     }
 
     // ─── Search ──────────────────────────────────────────────
     function doSearch() {
         const q = document.getElementById('search-input').value.trim();
         if (!q) { showToast('🔍 Enter a keyword to search'); return; }
-        showToast(`🔍 Searching Polygon for "${q}"…`);
+        showToast(`🔍 Searching demo listings for "${q}"…`);
         setTimeout(() => showToast('📦 1,248 results found — full search coming soon!'), 1800);
     }
 

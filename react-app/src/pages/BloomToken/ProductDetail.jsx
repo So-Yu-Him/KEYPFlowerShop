@@ -102,7 +102,7 @@ function ProductDetail() {
               <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem', flexWrap: 'wrap' }}>
                 {[
                   { label: 'Token',    value: 'BLMT'           },
-                  { label: 'Network',  value: 'Polygon'        },
+                  { label: 'Network',  value: 'Demo Network'   },
                   { label: 'Standard', value: 'ERC-20'         },
                   { label: 'Valid',    value: '12 months'      },
                 ].map((item) => (
@@ -188,7 +188,7 @@ function ProductDetail() {
 
               {/* Fee note */}
               <p style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '0.75rem' }}>
-                Platform fee 2.5% · Gas on Polygon (~$0.001)
+                Demo fee model: 2.5% · No real gas fee is charged in this prototype
               </p>
             </div>
           </div>

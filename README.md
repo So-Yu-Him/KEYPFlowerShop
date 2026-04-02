@@ -1,9 +1,9 @@
 # FloreX — Web3 Finance Suite
 
-> **On-Chain Blooms · Decentralised Beauty**
+> **Bloom Commerce · Web3 Demo Experience**
 >
 > A Web3 platform uniting flower commerce, peer-to-peer trading, and
-> decentralised lending — all powered by smart contracts on Polygon.
+> decentralised lending through conceptual product flows.
 
 ---
 
@@ -51,8 +51,8 @@ single, production-style React web application with:
 | `/`                | Home — brand hero, platform cards, animated stats, how-to guide |
 | `/bloomtoken`      | BloomToken — flower product grid with rarity filter          |
 | `/bloomtoken/:id`  | Product detail — buy modal with 4-step TX simulation         |
-| `/marketplace`     | Trovex — real-time search across 8 NFT-backed listings       |
-| `/marketplace/:id` | Item detail — on-chain history, buy/bid, similar items       |
+| `/marketplace`     | Trovex — real-time search across 8 demo NFT-style listings   |
+| `/marketplace/:id` | Item detail — demo activity history, buy/bid, similar items  |
 | `/lending`         | PeerLend — loan request listings with grade filter           |
 | `/lending/:id`     | Loan detail — repayment schedule, risk metrics, lend modal   |
 
@@ -64,7 +64,7 @@ single, production-style React web application with:
 
 A Web3 flower shop where customers pre-purchase ERC-20 coupon tokens (BLMT) and
 redeem them for fresh flower arrangements within 12 months. The smart contract
-automates payment routing between customer, courier, and florist.
+payment routing is shown as a conceptual flow between customer, courier, and florist.
 
 | Attribute | Value              |
 | --------- | ------------------ |
@@ -77,7 +77,7 @@ automates payment routing between customer, courier, and florist.
 
 A peer-to-peer C2C marketplace where every item is tokenised as an NFT (ERC-721)
 on Polygon. Buyers and sellers trade directly, with funds held in a smart contract
-escrow until delivery is confirmed by an oracle.
+escrow model shown in a simulated settlement flow.
 
 | Attribute | Value            |
 | --------- | ---------------- |
@@ -89,8 +89,8 @@ escrow until delivery is confirmed by an oracle.
 ### 🤝 PeerLend
 
 A DeFi P2P lending platform connecting individual lenders with grade-rated borrowers.
-Smart contracts handle collateral locking, monthly repayments via Chainlink oracle,
-and automatic liquidation on default.
+Collateral locking, monthly repayments, and liquidation are represented as conceptual
+product behavior in this demo.
 
 | Attribute | Value            |
 | --------- | ---------------- |
@@ -157,7 +157,7 @@ KEYPFlowerShop-main/
             ├── Trovex/
             │   ├── index.jsx       ← Marketplace with real-time search filter
             │   ├── ListingCard.jsx  ← NFT item card with rarity ribbon
-            │   ├── ItemDetail.jsx   ← Item detail + on-chain history + bid
+            │   ├── ItemDetail.jsx   ← Item detail + demo activity history + bid
             │   └── ListItemPanel.jsx ← Seller form to list a new item
             │
             └── PeerLend/
@@ -536,8 +536,8 @@ ERC-20 token (BLMT)
 ERC-721 token (per item) + Escrow
 ├── listItem()    — seller mints NFT, sets price
 ├── buyItem()     — buyer sends TRVX; funds locked in escrow
-├── confirmDelivery() — oracle confirms shipment; releases funds to seller
-└── dispute()     — either party triggers DAO arbitration
+├── confirmDelivery() — delivery status input confirms shipment; releases funds to seller
+└── dispute()     — either party triggers the dispute resolution workflow
 ```
 
 ### PeerLend Contract

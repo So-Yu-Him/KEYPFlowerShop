@@ -33,7 +33,7 @@ export const LOAN_LISTINGS = [
     purpose: 'Flower Shop Inventory Restocking',
     collateral: 'BLMT x 500',
     repaymentType: 'Monthly',
-    description: 'For seasonal bulk purchasing at the flower wholesale market. Borrower is a registered floral retailer with 12 months of on-chain repayment history. Collateral: 500 BloomTokens locked in escrow.',
+    description: 'For seasonal bulk purchasing at the flower wholesale market. Borrower profile and repayment record are demo data for this prototype. Collateral model: 500 BloomTokens (simulated).',
     repayHistory: [
       { month: 'Jan', repaid: true  },
       { month: 'Feb', repaid: true  },
@@ -53,7 +53,7 @@ export const LOAN_LISTINGS = [
     purpose: 'NFT Flip Arbitrage',
     collateral: 'Trovex Item #42',
     repaymentType: 'Bullet',
-    description: 'Purchasing NFT assets for short-term arbitrage resale. Higher risk is reflected in the interest rate. Collateral: Trovex NFT #42 locked in on-chain escrow contract.',
+    description: 'Purchasing NFT assets for short-term arbitrage resale. Higher risk is reflected in the interest rate. Collateral model uses Trovex NFT #42 in this simulated flow.',
     repayHistory: [],
   },
   {
@@ -69,7 +69,7 @@ export const LOAN_LISTINGS = [
     purpose: 'DeFi Liquidity Provision',
     collateral: 'ETH x 2',
     repaymentType: 'Monthly',
-    description: 'Capital for a Uniswap V3 liquidity pool. Borrower has 24 months of DeFi history with an A+ credit grade. Over-collateralised at 200% — extremely low risk profile.',
+    description: 'Capital for a Uniswap V3 liquidity pool. Borrower history and A+ grade are sample data in this academic demo. Over-collateralisation is shown as a conceptual risk-control model.',
     repayHistory: [
       { month: 'Oct', repaid: true },
       { month: 'Nov', repaid: true },
@@ -111,7 +111,7 @@ function PeerLend() {
           <h1>Peer<span>Lend</span></h1>
           <p className="hero-tagline">
             Earn up to 12% APR by lending ETH to verified borrowers.
-            Smart contracts handle repayments, collateral, and dispute resolution automatically.
+            Repayments, collateral, and dispute logic are demonstrated as simulated product flows.
           </p>
 
           <button
@@ -164,7 +164,7 @@ function PeerLend() {
           <div style={{ width: '100%' }}>
             <div className="section-header">
               <h2>📋 Active Loan Requests</h2>
-              <p>Grade-rated borrowers · Collateral locked on-chain · Automated repayments</p>
+              <p>Grade-rated borrowers · Simulated collateral model · Prototype repayment flow</p>
             </div>
 
             {/* Grade filter */}
@@ -241,13 +241,13 @@ function PeerLend() {
           <div style={{ width: '100%' }}>
             <div className="section-header">
               <h2>How PeerLend Works</h2>
-              <p>Fully automated by smart contracts — no human intermediary</p>
+              <p>Conceptual lending workflow shown for academic demonstration</p>
             </div>
             <div className="steps-grid" style={{ marginBottom: '3rem' }}>
               {[
-                { icon: '🎯', step: 'Step 1', title: 'Borrower Requests',    desc: 'Submit a loan request with amount, rate, duration, and collateral. Chainlink Oracle verifies credit grade.' },
-                { icon: '💰', step: 'Step 2', title: 'Lenders Fund Pool',    desc: 'Lenders deposit ETH into the escrow contract. Funds are held until the round closes.' },
-                { icon: '✅', step: 'Step 3', title: 'Automated Repayments', desc: 'Monthly repayments pull from the borrower\'s pre-approved wallet. Default triggers automatic collateral liquidation.' },
+                { icon: '🎯', step: 'Step 1', title: 'Borrower Requests',    desc: 'Submit a loan request with amount, rate, duration, and collateral. Credit grades are represented with demo scoring data.' },
+                { icon: '💰', step: 'Step 2', title: 'Lenders Fund Pool',    desc: 'Lenders contribute ETH in a simulated funding flow until the round target is reached.' },
+                { icon: '✅', step: 'Step 3', title: 'Repayment Timeline',   desc: 'Repayment and liquidation behavior is visualized as a conceptual workflow for learning.' },
               ].map((s) => (
                 <div key={s.step} className="step-card">
                   <span className="step-icon">{s.icon}</span>
@@ -265,9 +265,9 @@ function PeerLend() {
             <div className="risk-grid">
               {[
                 { icon: '🔒', title: 'Collateral Lock',   desc: 'All loans require 150–300% over-collateralisation. Assets are liquidated automatically on default.' },
-                { icon: '📊', title: 'Credit Scoring',    desc: 'Chainlink-powered oracle grades borrowers A+ to C based on on-chain history. Only A–B requests are listed.' },
-                { icon: '🛡️', title: 'Insurance Pool',   desc: '1% of interest funds a community insurance pool, covering up to 10% of pool value in edge-case defaults.' },
-                { icon: '⚖️', title: 'DAO Arbitration',  desc: 'PLDT token holders vote on disputes. Neutral on-chain governance resolves cases within 72 hours.' },
+                { icon: '📊', title: 'Credit Scoring',    desc: 'Borrower grades (A+ to C) are sample scores used to demonstrate risk tiers in the UI.' },
+                { icon: '🛡️', title: 'Insurance Pool',   desc: 'Insurance pool percentages are example assumptions for discussing default protection design.' },
+                { icon: '⚖️', title: 'Dispute Handling', desc: 'Arbitration is presented as a conceptual governance workflow, not a live on-chain vote.' },
               ].map((r) => (
                 <div key={r.title} className="risk-card">
                   <span className="risk-icon">{r.icon}</span>
