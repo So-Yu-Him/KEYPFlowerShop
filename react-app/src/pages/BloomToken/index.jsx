@@ -190,7 +190,7 @@ function BloomToken() {
           {/* Inline token sale progress */}
           <div style={{ width: '100%', maxWidth: '520px', margin: '0 auto' }}>
             <div className="progress-labels">
-              <span>34 tokens sold</span>
+              <span>34 NFTs minted</span>
               <span>66 remaining</span>
             </div>
             <div className="progress-bar-bg" style={{ marginTop: '0.5rem' }}>

@@ -18,6 +18,7 @@ import { useWallet } from '../../context/WalletContext'
 const PAYMENT_METHODS = ['ETH', 'USDC', 'KEYP']
 const KEYP_OPERATIONAL_FEE = 2
 const KEYP_MAINTENANCE_FEE = 1
+const KEYP_PRICE_USD = 0.25
 
 /* Transaction stages */
 const TX_STAGES = [
@@ -58,6 +59,9 @@ function PurchasePanel({ isOpen, onClose, product }) {
   const operationalFee = KEYP_OPERATIONAL_FEE * qty
   const maintenanceFee = KEYP_MAINTENANCE_FEE * qty
   const totalKeypFee = operationalFee + maintenanceFee
+  const operationalFeeUsd = (operationalFee * KEYP_PRICE_USD).toFixed(2)
+  const maintenanceFeeUsd = (maintenanceFee * KEYP_PRICE_USD).toFixed(2)
+  const totalKeypFeeUsd = (totalKeypFee * KEYP_PRICE_USD).toFixed(2)
 
   // ── Simulate on-chain transaction ──────────────────────────
   const handleConfirm = async () => {
@@ -197,15 +201,24 @@ function PurchasePanel({ isOpen, onClose, product }) {
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem' }}>
                 <span style={{ color: 'var(--text-secondary)' }}>Operational fee</span>
-                <span style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{operationalFee} KEYP</span>
+                <span style={{ color: 'var(--text-primary)', fontWeight: 600 }}>
+                  {operationalFee} KEYP <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>(~${operationalFeeUsd})</span>
+                </span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem' }}>
                 <span style={{ color: 'var(--text-secondary)' }}>Maintenance fee</span>
-                <span style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{maintenanceFee} KEYP</span>
+                <span style={{ color: 'var(--text-primary)', fontWeight: 600 }}>
+                  {maintenanceFee} KEYP <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>(~${maintenanceFeeUsd})</span>
+                </span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.82rem', paddingTop: '0.2rem', borderTop: '1px dashed rgba(255,255,255,0.15)' }}>
                 <span style={{ color: 'var(--text-secondary)' }}>Total KEYP fees</span>
-                <span style={{ color: 'var(--green)', fontWeight: 700 }}>{totalKeypFee} KEYP</span>
+                <span style={{ color: 'var(--green)', fontWeight: 700 }}>
+                  {totalKeypFee} KEYP <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>(~${totalKeypFeeUsd})</span>
+                </span>
+              </div>
+              <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
+                KEYP reference price used in demo: ${KEYP_PRICE_USD.toFixed(2)} per KEYP
               </div>
             </div>
 
