@@ -77,13 +77,13 @@ maintenance fee lines in each purchase flow.
 ### 💎 Trovex
 
 A peer-to-peer C2C marketplace where every item is tokenised as an NFT (ERC-721)
-on Polygon. Buyers and sellers trade directly, with funds held in a smart contract
+on Base. Buyers and sellers trade directly, with funds held in a smart contract
 escrow model shown in a simulated settlement flow.
 
 | Attribute | Value            |
 | --------- | ---------------- |
 | Token     | TRVX             |
-| Network   | Polygon          |
+| Network   | Base          |
 | Theme     | Orange `#f97316` |
 | Route     | `/marketplace`   |
 
@@ -96,7 +96,7 @@ product behavior in this demo.
 | Attribute | Value            |
 | --------- | ---------------- |
 | Token     | PLDT             |
-| Network   | Polygon          |
+| Network   | Base          |
 | Theme     | Indigo `#4f46e5` |
 | Route     | `/lending`       |
 
