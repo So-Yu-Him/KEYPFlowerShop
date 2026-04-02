@@ -48,7 +48,7 @@ const PLATFORMS = [
     path:     '/bloomtoken',
     icon:     '🌸',
     title:    'BloomToken',
-    desc:     'Pre-purchase ERC-20 flower coupon tokens. Redeem for fresh blooms anytime within 12 months.',
+    desc:     'Mint ERC-721 bouquet NFTs on Base. Redeem fresh blooms anytime within 12 months.',
     cta:      'Explore Flowers →',
     color:    '#f43f5e',
     gradient: 'linear-gradient(90deg, #f43f5e, #fb7185)',
@@ -59,7 +59,7 @@ const PLATFORMS = [
     path:     '/marketplace',
     icon:     '💎',
     title:    'Trovex',
-    desc:     'Buy and sell second-hand goods peer-to-peer. Every item is an NFT ownership certificate on Polygon.',
+    desc:     'Buy and sell second-hand goods peer-to-peer in a demo flow. Each item includes NFT-style ownership metadata.',
     cta:      'Browse Market →',
     color:    '#f97316',
     gradient: 'linear-gradient(90deg, #f97316, #fbbf24)',
@@ -70,7 +70,7 @@ const PLATFORMS = [
     path:     '/lending',
     icon:     '🤝',
     title:    'PeerLend',
-    desc:     'Lend ETH to verified borrowers and earn up to 12% APR. Smart contract escrow, automated repayments.',
+    desc:     'Explore lending scenarios with graded borrowers and simulated returns in a prototype interface.',
     cta:      'Start Lending →',
     color:    '#4f46e5',
     gradient: 'linear-gradient(90deg, #4f46e5, #7c3aed)',
@@ -82,8 +82,8 @@ const PLATFORMS = [
 /* ── How-to-start steps ──────────────────────────────────────── */
 const HOW_STEPS = [
   { num: '01', icon: '🦊', title: 'Connect Wallet',   desc: 'Link your MetaMask. Sign a message to verify ownership — no password needed.' },
-  { num: '02', icon: '🎯', title: 'Choose a Service', desc: 'Pick BloomToken, Trovex, or PeerLend. Each runs on its own audited smart contract.' },
-  { num: '03', icon: '⚡', title: 'Trade On-Chain',   desc: 'Buy tokens, list items, or fund loans. Every transaction is verifiable on Polygon.' },
+  { num: '02', icon: '🎯', title: 'Choose a Service', desc: 'Pick BloomToken, Trovex, or PeerLend. Each has its own demo workflow and feature set.' },
+  { num: '03', icon: '⚡', title: 'Try Demo Flows',   desc: 'Buy tokens, list items, or fund loans through simulated transaction steps in the UI.' },
 ]
 
 /* ── Stats data ──────────────────────────────────────────────── */
@@ -126,7 +126,7 @@ function Home() {
           <p className="home-hero-sub">On-Chain Blooms · Decentralised Beauty</p>
           <p className="home-hero-tagline">
             A Web3 platform uniting flower commerce, peer-to-peer trading,
-            and decentralised lending — all powered by smart contracts on Polygon.
+            and decentralised lending — presented through conceptual smart-contract flows.
           </p>
 
           <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', justifyContent: 'center' }}>
@@ -190,7 +190,7 @@ function Home() {
           <div style={{ width: '100%' }}>
             <div className="section-header" style={{ marginBottom: '2.5rem' }}>
               <h2>Platform at a Glance</h2>
-              <p>All data verified on-chain · Updated in real time</p>
+              <p>Sample metrics for this demo experience</p>
             </div>
             <div className="stats-grid" style={{ maxWidth: '800px', margin: '0 auto' }}>
               {STATS.map((s) => (
@@ -207,7 +207,7 @@ function Home() {
           <div style={{ width: '100%', maxWidth: '900px', margin: '0 auto', padding: '0 1.5rem' }}>
             <div className="section-header" style={{ marginBottom: '3rem' }}>
               <h2>How to Get Started</h2>
-              <p>Three steps to start trading on-chain in under 2 minutes</p>
+              <p>Three steps to explore the product demos in under 2 minutes</p>
             </div>
             <div className="how-steps">
               {HOW_STEPS.map((s) => (

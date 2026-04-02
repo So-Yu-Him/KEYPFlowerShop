@@ -237,8 +237,8 @@ function Trovex() {
           <div className="hero-badge">💎 NFT-Backed · Trovex C2C Marketplace</div>
           <h1>Trade <span>Smarter</span></h1>
           <p className="hero-tagline">
-            Every item is a blockchain-verified NFT ownership certificate.
-            Buy and sell second-hand goods with escrow protection — peer-to-peer on Polygon.
+            Every item includes NFT-style ownership metadata in this prototype.
+            Buy and sell second-hand goods through a simulated escrow-style marketplace flow.
           </p>
 
           <button
@@ -291,7 +291,7 @@ function Trovex() {
           <div style={{ width: '100%' }}>
             <div className="listings-header">
               <h2>🛍️ Browse Listings</h2>
-              <p>All items are NFT-certified · Escrow-protected transactions</p>
+              <p>Demo NFT-style metadata · Simulated escrow workflow</p>
             </div>
 
             {/* Real-time search — onChange filter, not form submit */}
@@ -344,13 +344,13 @@ function Trovex() {
           <div style={{ width: '100%' }}>
             <div className="section-header">
               <h2>How Trovex Works</h2>
-              <p>Trustless peer-to-peer trading with smart contract escrow</p>
+              <p>Peer-to-peer trading prototype with staged settlement logic</p>
             </div>
             <div className="steps-grid">
               {[
-                { icon: '📸', step: 'Step 1', title: 'List & Mint',       desc: 'Upload photos and set your price. The item is minted as a Trovex NFT on Polygon. AML-verified sellers only.' },
-                { icon: '🤝', step: 'Step 2', title: 'Buyer Purchases',   desc: 'Buyer sends TRVX to escrow. Smart contract holds funds until the courier confirms delivery via oracle.' },
-                { icon: '🚚', step: 'Step 3', title: 'Deliver & Settle',  desc: 'Ship the item. After confirmed delivery, escrow releases TRVX to seller. On-chain dispute resolution available.' },
+                { icon: '📸', step: 'Step 1', title: 'List & Mint',       desc: 'Upload photos and set your price. The app creates a demo NFT-style listing card for your item.' },
+                { icon: '🤝', step: 'Step 2', title: 'Buyer Purchases',   desc: 'Buyer action triggers a simulated escrow-style transaction sequence in the UI.' },
+                { icon: '🚚', step: 'Step 3', title: 'Deliver & Settle',  desc: 'Delivery and settlement are shown as conceptual stages for presentation and testing.' },
               ].map((s) => (
                 <div key={s.step} className="step-card">
                   <span className="step-icon">{s.icon}</span>

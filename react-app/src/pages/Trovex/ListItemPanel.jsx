@@ -6,7 +6,7 @@
  *   2. Choose category (pill selector)
  *   3. Choose condition (pill selector)
  *   4. Set asking price (auto-converts to TRVX, shows AI price suggestion)
- *   5. Click "Mint NFT & List Item"
+ *   5. Click "Create Demo Listing"
  */
 
 import { useState } from 'react'
@@ -57,7 +57,7 @@ function ListItemPanel() {
       return
     }
     const trvx = (priceNum / TRVX_RATE).toFixed(1)
-    showToast(`🎨 Minting NFT for "${itemName}" at HK$${priceNum} (${trvx} TRVX)…`)
+    showToast(`🧪 Creating demo listing for "${itemName}" at HK$${priceNum} (${trvx} TRVX)…`)
 
     // ── TODO: Real Thirdweb NFT mint + listing call ───────
     // const sdk         = new ThirdwebSDK("polygon")
@@ -65,13 +65,13 @@ function ListItemPanel() {
     // await nftContract.mintTo(userAddress, { name: itemName, price: priceNum })
     // ────────────────────────────────────────────────────
 
-    setTimeout(() => showToast('✅ NFT minted! Item is live on Trovex'), 2200)
+    setTimeout(() => showToast('✅ Demo listing created! Item is now visible on Trovex'), 2200)
   }
 
   return (
     <div className="list-section">
       <h3>📦 List Your Item</h3>
-      <p className="list-sub">Describe your item · AI prices it · Mint its NFT · Go live on Polygon</p>
+      <p className="list-sub">Describe your item · AI estimates price · Generate a demo NFT-style listing</p>
 
       {/* Item name */}
       <div className="form-group">
@@ -137,18 +137,18 @@ function ListItemPanel() {
         {/* AI price suggestion — only shown when a price is entered */}
         {aiSuggested && (
           <div className="ai-suggestion">
-            🤖 AI suggests: HK${aiSuggested.toLocaleString()} based on recent Polygon listings
+            🤖 AI suggests: HK${aiSuggested.toLocaleString()} based on recent demo marketplace data
           </div>
         )}
       </div>
 
       <div className="fee-note">
-        💡 Platform fee 1.5% deducted on sale · 1.5% held in dispute reserve for 7 days ·
-        Remaining 97% released to your wallet upon buyer confirmation.
+        💡 Example fee model for demo only: 1.5% platform fee · 1.5% dispute reserve ·
+        97% seller payout in the simulated settlement flow.
       </div>
 
       <button className="action-btn" onClick={handleList}>
-        Mint NFT &amp; List Item →
+        Create Demo Listing →
       </button>
     </div>
   )

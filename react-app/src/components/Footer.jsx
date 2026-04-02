@@ -10,7 +10,7 @@ function Footer() {
         <div className="footer-brand">
           <BrandLogo size={28} />
           <span className="footer-brand-name">FloreX</span>
-          <p className="footer-slogan">On-Chain Blooms · Decentralised Beauty</p>
+          <p className="footer-slogan">Bloom Commerce · Web3 Demo Experience</p>
         </div>
 
         {/* Links */}
@@ -24,13 +24,13 @@ function Footer() {
         <div className="footer-links-group">
           <span className="footer-group-title">Resources</span>
           <a href="https://thirdweb.com" target="_blank" rel="noreferrer" className="footer-link">Thirdweb</a>
-          <a href="https://polygon.technology" target="_blank" rel="noreferrer" className="footer-link">Polygon</a>
+          <a href="https://base.org" target="_blank" rel="noreferrer" className="footer-link">Base</a>
           <a href="https://github.com" target="_blank" rel="noreferrer" className="footer-link">GitHub</a>
         </div>
       </div>
 
       <div className="footer-bottom">
-        <p>© 2026 <strong>FloreX</strong> · Powered by Thirdweb · Built on Polygon</p>
+        <p>© 2026 <strong>FloreX</strong> · Powered by Thirdweb · Base-inspired concept</p>
         <p className="footer-disclaimer">
           Proof of Concept · Academic purposes only · Not financial advice · SBIF Assignment
         </p>

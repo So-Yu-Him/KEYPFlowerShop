@@ -1,9 +1,9 @@
 # FloreX — Web3 Finance Suite
 
-> **On-Chain Blooms · Decentralised Beauty**
+> **Bloom Commerce · Web3 Demo Experience**
 >
 > A Web3 platform uniting flower commerce, peer-to-peer trading, and
-> decentralised lending — all powered by smart contracts on Polygon.
+> decentralised lending through conceptual product flows.
 
 ---
 
@@ -51,8 +51,8 @@ single, production-style React web application with:
 | `/` | Home — brand hero, platform cards, animated stats, how-to guide |
 | `/bloomtoken` | BloomToken — flower product grid with rarity filter |
 | `/bloomtoken/:id` | Product detail — buy modal with 4-step TX simulation |
-| `/marketplace` | Trovex — real-time search across 8 NFT-backed listings |
-| `/marketplace/:id` | Item detail — on-chain history, buy/bid, similar items |
+| `/marketplace` | Trovex — real-time search across 8 demo NFT-style listings |
+| `/marketplace/:id` | Item detail — demo activity history, buy/bid, similar items |
 | `/lending` | PeerLend — loan request listings with grade filter |
 | `/lending/:id` | Loan detail — repayment schedule, risk metrics, lend modal |
 
@@ -62,20 +62,21 @@ single, production-style React web application with:
 
 ### 🌸 BloomToken
 A Web3 flower shop where customers pre-purchase ERC-20 coupon tokens (BLMT) and
-redeem them for fresh flower arrangements within 12 months. The smart contract
-automates payment routing between customer, courier, and florist.
+mint ERC-721 bouquet NFTs and redeem them for fresh flower arrangements within
+12 months. Transaction flow is modeled on Base, including KEYP operational and
+maintenance fee lines in each purchase flow.
 
 | Attribute | Value |
 |-----------|-------|
-| Token     | BLMT (ERC-20) |
-| Network   | Polygon |
+| Token     | BloomPass (ERC-721) |
+| Network   | Base |
 | Theme     | Rose red `#f43f5e` |
 | Route     | `/bloomtoken` |
 
 ### 💎 Trovex
 A peer-to-peer C2C marketplace where every item is tokenised as an NFT (ERC-721)
 on Polygon. Buyers and sellers trade directly, with funds held in a smart contract
-escrow until delivery is confirmed by an oracle.
+escrow model shown in a simulated settlement flow.
 
 | Attribute | Value |
 |-----------|-------|
@@ -86,8 +87,8 @@ escrow until delivery is confirmed by an oracle.
 
 ### 🤝 PeerLend
 A DeFi P2P lending platform connecting individual lenders with grade-rated borrowers.
-Smart contracts handle collateral locking, monthly repayments via Chainlink oracle,
-and automatic liquidation on default.
+Collateral locking, monthly repayments, and liquidation are represented as conceptual
+product behavior in this demo.
 
 | Attribute | Value |
 |-----------|-------|
@@ -154,7 +155,7 @@ KEYPFlowerShop-main/
             ├── Trovex/
             │   ├── index.jsx       ← Marketplace with real-time search filter
             │   ├── ListingCard.jsx  ← NFT item card with rarity ribbon
-            │   ├── ItemDetail.jsx   ← Item detail + on-chain history + bid
+            │   ├── ItemDetail.jsx   ← Item detail + demo activity history + bid
             │   └── ListItemPanel.jsx ← Seller form to list a new item
             │
             └── PeerLend/
@@ -503,11 +504,11 @@ The context also listens for MetaMask events:
 
 ### BloomToken Contract
 ```
-ERC-20 token (BLMT)
-├── mint()       — issued when customer pays; each token = one bouquet
-├── redeem()     — customer calls this to receive their flowers
-├── expire()     — oracle calls this after 12 months on unused tokens
-└── settle()     — distributes payment: supplier 40% / courier 30% / florist 30%
+ERC-721 collection (BloomPass NFTs on Base)
+├── mintPass()         — mints one bouquet NFT per purchase
+├── redeemPass()       — burns/redeems NFT for flower delivery
+├── chargeKeypFees()   — charges KEYP operational + maintenance fees
+└── settlePayout()     — handles supplier/courier/florist payout routing
 ```
 
 ### Trovex Escrow Contract
@@ -515,8 +516,8 @@ ERC-20 token (BLMT)
 ERC-721 token (per item) + Escrow
 ├── listItem()    — seller mints NFT, sets price
 ├── buyItem()     — buyer sends TRVX; funds locked in escrow
-├── confirmDelivery() — oracle confirms shipment; releases funds to seller
-└── dispute()     — either party triggers DAO arbitration
+├── confirmDelivery() — delivery status input confirms shipment; releases funds to seller
+└── dispute()     — either party triggers the dispute resolution workflow
 ```
 
 ### PeerLend Contract
@@ -592,4 +593,4 @@ production without a full security audit of the smart contract architecture.
 
 ---
 
-*Built with React 18 · Vite · ethers.js · Polygon (conceptual) · No external UI libraries*
+*Built with React 18 · Vite · ethers.js · Base (conceptual) · No external UI libraries*

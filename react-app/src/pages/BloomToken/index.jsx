@@ -66,7 +66,7 @@ export const FLOWER_PRODUCTS = [
     totalStock: 5,
     rarity: 'Rare',
     tags: ['rare', 'collectible'],
-    description: 'Only 5 on-chain orchid NFT vouchers minted worldwide. Redeem for a hand-cultivated Phalaenopsis orchid, or hold as a premium digital collectible. Artist-signed certificate included.',
+    description: 'Only 5 orchid voucher editions in this demo collection. Redeem for a hand-cultivated Phalaenopsis orchid, or keep as a premium digital collectible concept. Artist-signed certificate included.',
   },
   {
     id: 5,
@@ -90,7 +90,7 @@ export const FLOWER_PRODUCTS = [
     totalStock: 1,
     rarity: 'Legendary',
     tags: ['legendary', 'auction'],
-    description: 'The genesis legendary collectible. 1 of 1 worldwide. Gold-preservation process, mounted in a custom crystal display box. Ships with an on-chain certificate of authenticity and a physical notarised copy.',
+    description: 'The genesis legendary collectible. 1 of 1 worldwide. Gold-preservation process, mounted in a custom crystal display box. Includes a demo digital certificate of authenticity and a physical notarised copy.',
   },
 ]
 
@@ -154,11 +154,11 @@ function BloomToken() {
             SNAP 1 — Hero + Token Progress
         ══════════════════════════════════════════ */}
         <section className="snap-section hero">
-          <div className="hero-badge">🌹 Web3 Florist · ERC-20 Prepaid Coupon Token</div>
+          <div className="hero-badge">🌹 Web3 Florist · ERC-721 Floral NFT Collection on Base</div>
           <h1>Bloom<span>Token</span></h1>
           <p className="hero-tagline">
-            Pre-purchase flower coupon tokens and redeem a dozen fresh blooms
-            anytime within 12 months — secured by smart contracts on Polygon.
+            Mint bouquet access NFTs and redeem fresh blooms within 12 months
+            using a Base-chain inspired transaction flow.
           </p>
 
           <button
@@ -175,9 +175,9 @@ function BloomToken() {
           {/* Token stats */}
           <div className="hero-stats" style={{ marginTop: '3rem', marginBottom: '2.5rem' }}>
             {[
-              { value: '100',    label: 'Total Tokens'  },
-              { value: 'From $15', label: 'Per Token'  },
-              { value: '$1,500', label: 'Goal'          },
+              { value: '100',    label: 'Total NFTs'    },
+              { value: 'From $15', label: 'Per NFT'     },
+              { value: '$1,500', label: 'Mint Goal'     },
               { value: '12 mo',  label: 'Validity'      },
             ].map((s) => (
               <div key={s.label} className="stat">
@@ -190,7 +190,7 @@ function BloomToken() {
           {/* Inline token sale progress */}
           <div style={{ width: '100%', maxWidth: '520px', margin: '0 auto' }}>
             <div className="progress-labels">
-              <span>34 tokens sold</span>
+              <span>34 NFTs minted</span>
               <span>66 remaining</span>
             </div>
             <div className="progress-bar-bg" style={{ marginTop: '0.5rem' }}>
@@ -213,7 +213,7 @@ function BloomToken() {
           <div style={{ width: '100%' }}>
             <div className="section-header">
               <h2>🌸 Available Flowers</h2>
-              <p>Each token is redeemable for fresh flowers · Minted on Polygon</p>
+              <p>Each listing mints an ERC-721 bouquet NFT on Base (demo flow)</p>
             </div>
 
             {/* Rarity filter */}
@@ -297,9 +297,9 @@ function BloomToken() {
             </div>
             <div className="steps-grid">
               {[
-                { icon: '💳', step: 'Step 1', title: 'Connect & Buy',      desc: 'Connect your MetaMask and purchase BloomTokens using eHKD, USDC, Bitcoin, or FPS. AML screening runs on your public key.' },
-                { icon: '🌹', step: 'Step 2', title: 'Redeem Anytime',    desc: 'Ready for your flowers? Redeem a token and the smart contract automatically routes payment to the supplier, courier, and florist.' },
-                { icon: '🚚', step: 'Step 3', title: 'Delivered to You',  desc: 'After delivery is confirmed via oracle, remaining funds are released to the florist. Unused tokens auto-settle after 12 months.' },
+                { icon: '💳', step: 'Step 1', title: 'Connect & Mint',    desc: 'Connect MetaMask and mint bouquet NFTs in a simulated Base-chain flow.' },
+                { icon: '🪙', step: 'Step 2', title: 'Pay KEYP Fees',     desc: 'Each mint includes KEYP operational and maintenance fee lines per transaction.' },
+                { icon: '🌹', step: 'Step 3', title: 'Redeem Bouquet',    desc: 'Redeem your NFT for flowers within validity, with delivery shown as a demo process.' },
               ].map((s) => (
                 <div key={s.step} className="step-card">
                   <span className="step-icon">{s.icon}</span>
