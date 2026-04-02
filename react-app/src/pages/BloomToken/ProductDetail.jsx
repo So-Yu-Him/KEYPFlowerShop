@@ -101,9 +101,9 @@ function ProductDetail() {
               {/* Token info cards */}
               <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem', flexWrap: 'wrap' }}>
                 {[
-                  { label: 'Token',    value: 'BLMT'           },
-                  { label: 'Network',  value: 'Demo Network'   },
-                  { label: 'Standard', value: 'ERC-20'         },
+                  { label: 'Collection', value: 'BloomPass NFT' },
+                  { label: 'Network',    value: 'Base'          },
+                  { label: 'Standard',   value: 'ERC-721'       },
                   { label: 'Valid',    value: '12 months'      },
                 ].map((item) => (
                   <div key={item.label} style={{
@@ -188,7 +188,7 @@ function ProductDetail() {
 
               {/* Fee note */}
               <p style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '0.75rem' }}>
-                Demo fee model: 2.5% · No real gas fee is charged in this prototype
+                Per transaction: operational fee + maintenance fee in KEYP tokens (demo model on Base)
               </p>
             </div>
           </div>

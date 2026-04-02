@@ -48,7 +48,7 @@ const PLATFORMS = [
     path:     '/bloomtoken',
     icon:     '🌸',
     title:    'BloomToken',
-    desc:     'Pre-purchase ERC-20 flower coupon tokens. Redeem for fresh blooms anytime within 12 months.',
+    desc:     'Mint ERC-721 bouquet NFTs on Base. Redeem fresh blooms anytime within 12 months.',
     cta:      'Explore Flowers →',
     color:    '#f43f5e',
     gradient: 'linear-gradient(90deg, #f43f5e, #fb7185)',

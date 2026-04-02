@@ -31,7 +31,7 @@ export const LOAN_LISTINGS = [
     funded: 67,
     grade: 'A',
     purpose: 'Flower Shop Inventory Restocking',
-    collateral: 'BLMT x 500',
+    collateral: 'BloomPass NFTs x 500',
     repaymentType: 'Monthly',
     description: 'For seasonal bulk purchasing at the flower wholesale market. Borrower profile and repayment record are demo data for this prototype. Collateral model: 500 BloomTokens (simulated).',
     repayHistory: [

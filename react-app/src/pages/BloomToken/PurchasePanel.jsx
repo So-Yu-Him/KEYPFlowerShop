@@ -1,6 +1,6 @@
 // filepath: src/pages/BloomToken/PurchasePanel.jsx
 /**
- * PurchasePanel — modal dialog for purchasing a BloomToken product
+ * PurchasePanel — modal dialog for minting BloomToken NFTs
  *
  * Props:
  *   isOpen   {boolean}  - whether the modal is visible
@@ -8,27 +8,30 @@
  *   product  {object}   - the product being purchased (from FLOWER_PRODUCTS)
  *
  * Transaction simulation:
- *   Clicking "Confirm Purchase" steps through 4 stages with timeouts,
+ *   Clicking "Confirm NFT Mint" steps through staged timeouts,
  *   then shows a toast with a fake TX hash — no real contract call.
  */
 
 import { useState, useRef, useEffect } from 'react'
 import { useWallet } from '../../context/WalletContext'
 
-const PAYMENT_METHODS = ['eHKD', 'USDC', 'ETH', 'FPS']
+const PAYMENT_METHODS = ['ETH', 'USDC', 'KEYP']
+const KEYP_OPERATIONAL_FEE = 2
+const KEYP_MAINTENANCE_FEE = 1
 
-/* Four transaction stages */
+/* Transaction stages */
 const TX_STAGES = [
   { icon: '✍️', label: 'Awaiting wallet signature...' },
-  { icon: '📡', label: 'Broadcasting transaction...'  },
+  { icon: '🪙', label: 'Charging KEYP service fees...' },
+  { icon: '📡', label: 'Broadcasting Base transaction...'  },
   { icon: '⛓️', label: 'Waiting for confirmation...'  },
-  { icon: '✅', label: 'Transaction complete!'          },
+  { icon: '✅', label: 'NFT mint complete!'             },
 ]
 
 function PurchasePanel({ isOpen, onClose, product }) {
   const { isConnected, connect, showToast } = useWallet()
   const [qty,         setQty]         = useState(1)
-  const [payment,     setPayment]     = useState('eHKD')
+  const [payment,     setPayment]     = useState('ETH')
   const [txStage,     setTxStage]     = useState(-1) // -1 = not started
   const [txDone,      setTxDone]      = useState(false)
   const timerRef = useRef(null)
@@ -37,7 +40,7 @@ function PurchasePanel({ isOpen, onClose, product }) {
   useEffect(() => {
     if (isOpen) {
       setQty(1)
-      setPayment('eHKD')
+      setPayment('ETH')
       setTxStage(-1)
       setTxDone(false)
     }
@@ -52,6 +55,9 @@ function PurchasePanel({ isOpen, onClose, product }) {
 
   const totalEth = (product.price * qty).toFixed(4)
   const totalUsd = (product.priceUsd * qty).toLocaleString()
+  const operationalFee = KEYP_OPERATIONAL_FEE * qty
+  const maintenanceFee = KEYP_MAINTENANCE_FEE * qty
+  const totalKeypFee = operationalFee + maintenanceFee
 
   // ── Simulate on-chain transaction ──────────────────────────
   const handleConfirm = async () => {
@@ -72,7 +78,7 @@ function PurchasePanel({ isOpen, onClose, product }) {
         setTimeout(() => {
           setTxDone(true)
           const hash = '0x' + Math.random().toString(16).slice(2, 12)
-          showToast(`🎉 Purchase confirmed! TX: ${hash}`)
+          showToast(`🎉 NFT minted on Base! TX: ${hash}`)
         }, 800)
       }
     }
@@ -92,7 +98,7 @@ function PurchasePanel({ isOpen, onClose, product }) {
         {/* ── Header ── */}
         <div className="modal-header">
           <span className="modal-title">
-            {txDone ? '🎉 Purchase Complete' : `Purchase ${product.emoji} ${product.name}`}
+            {txDone ? '🎉 Mint Complete' : `Mint ${product.emoji} ${product.name} NFT`}
           </span>
           <button className="modal-close" onClick={handleClose} aria-label="Close">✕</button>
         </div>
@@ -105,7 +111,7 @@ function PurchasePanel({ isOpen, onClose, product }) {
               {qty} × {product.name}
             </p>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', marginBottom: '1.75rem' }}>
-              Your BloomToken NFT has been minted to your wallet.
+              Your BloomToken ERC-721 NFT has been minted in this Base demo flow.
               A redemption code will arrive via email within 2 hours.
             </p>
             <button className="btn-primary" onClick={handleClose}>Done</button>
@@ -123,7 +129,7 @@ function PurchasePanel({ isOpen, onClose, product }) {
               <div>
                 <div style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: '0.9rem' }}>{product.name}</div>
                 <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginTop: '0.15rem' }}>
-                  {product.price} ETH each · ≈ ${product.priceUsd} USD
+                  {product.price} ETH each · ≈ ${product.priceUsd} USD · Network: Base
                 </div>
               </div>
             </div>
@@ -174,10 +180,33 @@ function PurchasePanel({ isOpen, onClose, product }) {
               flexWrap: 'wrap',
               gap: '0.4rem',
             }}>
-              <span style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>Total ({qty} token{qty > 1 ? 's' : ''})</span>
+              <span style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>Mint total ({qty} NFT{qty > 1 ? 's' : ''})</span>
               <span style={{ fontWeight: 700, color: 'var(--primary)', fontSize: '1.05rem' }}>
                 {totalEth} ETH <span style={{ fontWeight: 400, color: 'var(--text-muted)', fontSize: '0.78rem' }}>≈ ${totalUsd}</span>
               </span>
+            </div>
+
+            <div style={{
+              background: 'rgba(16,185,129,0.06)',
+              border: '1px solid rgba(16,185,129,0.2)',
+              borderRadius: 'var(--radius-md)',
+              padding: '0.85rem 1rem',
+              marginBottom: '1.5rem',
+              display: 'grid',
+              gap: '0.35rem',
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem' }}>
+                <span style={{ color: 'var(--text-secondary)' }}>Operational fee</span>
+                <span style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{operationalFee} KEYP</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem' }}>
+                <span style={{ color: 'var(--text-secondary)' }}>Maintenance fee</span>
+                <span style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{maintenanceFee} KEYP</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.82rem', paddingTop: '0.2rem', borderTop: '1px dashed rgba(255,255,255,0.15)' }}>
+                <span style={{ color: 'var(--text-secondary)' }}>Total KEYP fees</span>
+                <span style={{ color: 'var(--green)', fontWeight: 700 }}>{totalKeypFee} KEYP</span>
+              </div>
             </div>
 
             {/* Transaction step indicator (visible while processing) */}
@@ -205,7 +234,7 @@ function PurchasePanel({ isOpen, onClose, product }) {
                 style={{ width: '100%' }}
                 onClick={handleConfirm}
               >
-                {isConnected ? 'Confirm Purchase' : 'Connect Wallet First'}
+                {isConnected ? 'Confirm NFT Mint' : 'Connect Wallet First'}
               </button>
             )}
 

@@ -62,13 +62,14 @@ single, production-style React web application with:
 
 ### 🌸 BloomToken
 A Web3 flower shop where customers pre-purchase ERC-20 coupon tokens (BLMT) and
-redeem them for fresh flower arrangements within 12 months. The smart contract
-payment routing is shown as a conceptual flow between customer, courier, and florist.
+mint ERC-721 bouquet NFTs and redeem them for fresh flower arrangements within
+12 months. Transaction flow is modeled on Base, including KEYP operational and
+maintenance fee lines in each purchase flow.
 
 | Attribute | Value |
 |-----------|-------|
-| Token     | BLMT (ERC-20) |
-| Network   | Polygon |
+| Token     | BloomPass (ERC-721) |
+| Network   | Base |
 | Theme     | Rose red `#f43f5e` |
 | Route     | `/bloomtoken` |
 
@@ -503,11 +504,11 @@ The context also listens for MetaMask events:
 
 ### BloomToken Contract
 ```
-ERC-20 token (BLMT)
-├── mint()       — issued when customer pays; each token = one bouquet
-├── redeem()     — customer calls this to receive their flowers
-├── expire()     — oracle calls this after 12 months on unused tokens
-└── settle()     — distributes payment: supplier 40% / courier 30% / florist 30%
+ERC-721 collection (BloomPass NFTs on Base)
+├── mintPass()         — mints one bouquet NFT per purchase
+├── redeemPass()       — burns/redeems NFT for flower delivery
+├── chargeKeypFees()   — charges KEYP operational + maintenance fees
+└── settlePayout()     — handles supplier/courier/florist payout routing
 ```
 
 ### Trovex Escrow Contract
@@ -592,4 +593,4 @@ production without a full security audit of the smart contract architecture.
 
 ---
 
-*Built with React 18 · Vite · ethers.js · Polygon (conceptual) · No external UI libraries*
+*Built with React 18 · Vite · ethers.js · Base (conceptual) · No external UI libraries*
