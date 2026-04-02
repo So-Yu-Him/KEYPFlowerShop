@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trovex — Web3 C2C Marketplace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --orange: #f97316;
+            --orange-dark: #ea580c;
+            --orange-light: #fed7aa;
+            --orange-pale: #fff7ed;
+            --green: #16a34a;
+            --green-light: #dcfce7;
+            --blue: #3b82f6;
+            --blue-light: #dbeafe;
+            --purple-light: #f3e8ff;
+            --pink-light: #fce7f3;
+            --teal-light: #d1fae5;
+            --amber-light: #fef3c7;
+            --amber: #d97706;
+            --red: #ef4444;
+            --red-light: #fee2e2;
+            --gray: #6b7280;
+            --dark: #111827;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--white);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #f1f5f9;
+            z-index: 1000;
+        }
+
+        .nav-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--orange);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        #network-badge {
+            display: none;
+            font-size: 0.75rem;
+            padding: 0.3rem 0.7rem;
+            border-radius: 100px;
+            background: var(--green-light);
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        #address-display {
+            font-size: 0.78rem;
+            color: var(--gray);
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            padding: 0.4rem 0.75rem;
+            border-radius: 100px;
+            font-family: 'Courier New', monospace;
+            display: none;
+        }
+
+        #connect-btn-nav {
+            background: var(--orange);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.25rem;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        #connect-btn-nav:hover { background: var(--orange-dark); transform: translateY(-1px); }
+        #connect-btn-nav.connected { background: var(--green); }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 7rem 1.5rem 4rem;
+            background: linear-gradient(180deg, #fff7ed 0%, #ffffff 65%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '💎';
+            position: absolute;
+            font-size: 20rem;
+            opacity: 0.04;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--orange-light);
+            color: var(--orange-dark);
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 0.35rem 1rem;
+            border-radius: 100px;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3.5rem, 9vw, 6.5rem);
+            font-weight: 700;
+            line-height: 1.05;
+            color: var(--dark);
+            margin-bottom: 1.25rem;
+        }
+
+        .hero h1 span { color: var(--orange); }
+
+        .hero-tagline {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            color: var(--gray);
+            max-width: 560px;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+        }
+
+        #hero-connect-btn {
+            background: var(--orange);
+            color: white;
+            border: none;
+            padding: 1.1rem 2.75rem;
+            border-radius: 100px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 24px rgba(249, 115, 22, 0.35);
+            letter-spacing: 0.02em;
+        }
+
+        #hero-connect-btn:hover {
+            background: var(--orange-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(249, 115, 22, 0.45);
+        }
+
+        #hero-connect-btn.connected {
+            background: var(--green);
+            box-shadow: 0 4px 24px rgba(22, 163, 74, 0.35);
+        }
+
+        #hero-wallet-address {
+            display: none;
+            margin-top: 1rem;
+            padding: 0.8rem 1rem;
+            border-radius: 0.85rem;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            color: var(--gray);
+            font-size: 0.84rem;
+            max-width: 560px;
+            word-break: break-all;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+        }
+
+        #hero-wallet-address strong { color: var(--dark); margin-right: 0.4rem; }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            margin-top: 4rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .stat { text-align: center; }
+
+        .stat-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--orange);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.78rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        /* ── PROGRESS ── */
+        .progress-section {
+            padding: 2.5rem 1.5rem;
+            background: white;
+            text-align: center;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .progress-container { max-width: 580px; margin: 0 auto; }
+
+        .progress-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .progress-bar-bg {
+            background: #f1f5f9;
+            border-radius: 100px;
+            height: 12px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background: linear-gradient(90deg, var(--orange-light), var(--orange));
+            height: 100%;
+            border-radius: 100px;
+            width: 0%;
+            animation: growBar 1.5s ease forwards;
+        }
+
+        @keyframes growBar {
+            from { width: 0%; }
+            to { width: 78%; }
+        }
+
+        .progress-text {
+            margin-top: 0.75rem;
+            font-weight: 600;
+            color: var(--orange);
+            font-size: 0.9rem;
+        }
+
+        /* ── FEATURED LISTINGS ── */
+        .listings-section {
+            padding: 4rem 1.5rem;
+        }
+
+        .listings-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .listings-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            margin-bottom: 0.6rem;
+        }
+
+        .listings-header p { color: var(--gray); font-size: 0.9rem; }
+
+        .search-bar-wrap {
+            max-width: 520px;
+            margin: 0 auto 2.5rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.75rem 1.1rem;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 100px;
+            font-size: 0.875rem;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus { border-color: var(--orange); }
+
+        .search-btn {
+            background: var(--orange);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.4rem;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .search-btn:hover { background: var(--orange-dark); }
+
+        .listing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .listing-card {
+            background: white;
+            border-radius: 1.25rem;
+            overflow: hidden;
+            border: 1.5px solid #f1f5f9;
+            transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+
+        .listing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+            border-color: var(--orange-light);
+        }
+
+        .listing-img-wrap {
+            height: 155px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.75rem;
+        }
+
+        .img-electronics { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+        .img-computer    { background: linear-gradient(135deg, #e0e7ff, #c7d2fe); }
+        .img-fashion     { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }
+        .img-photo       { background: linear-gradient(135deg, #f3e8ff, #e9d5ff); }
+
+        .listing-body { padding: 1.1rem 1.25rem 1.35rem; }
+
+        .listing-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.45rem;
+        }
+
+        .condition-tag {
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 0.2rem 0.55rem;
+            border-radius: 100px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .cond-like-new { background: var(--green-light); color: var(--green); }
+        .cond-good     { background: var(--blue-light);  color: var(--blue); }
+        .cond-fair     { background: var(--amber-light); color: var(--amber); }
+
+        .nft-tag {
+            font-size: 0.67rem;
+            color: var(--gray);
+            font-family: 'Courier New', monospace;
+        }
+
+        .listing-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--dark);
+            margin-bottom: 0.45rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .listing-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--orange);
+            margin-bottom: 0.2rem;
+        }
+
+        .listing-price span {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            color: var(--gray);
+            font-weight: 400;
+        }
+
+        .listing-original {
+            font-size: 0.75rem;
+            color: var(--gray);
+            text-decoration: line-through;
+            margin-bottom: 0.65rem;
+        }
+
+        .listing-meta {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.75rem;
+        }
+
+        .meta-badge {
+            font-size: 0.66rem;
+            font-weight: 600;
+            padding: 0.18rem 0.5rem;
+            border-radius: 100px;
+        }
+
+        .meta-green  { background: var(--green-light); color: var(--green); }
+        .meta-orange { background: var(--orange-pale);  color: var(--orange-dark); }
+
+        .listing-seller {
+            font-size: 0.72rem;
+            color: var(--gray);
+            font-family: 'Courier New', monospace;
+            margin-bottom: 0.9rem;
+        }
+
+        .buy-now-btn {
+            width: 100%;
+            background: var(--orange);
+            color: white;
+            border: none;
+            padding: 0.6rem;
+            border-radius: 100px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .buy-now-btn:hover { background: var(--orange-dark); transform: translateY(-1px); }
+
+        .view-all-wrap { text-align: center; margin-top: 2rem; }
+
+        .view-all-btn {
+            display: inline-block;
+            padding: 0.7rem 2rem;
+            border: 1.5px solid var(--orange);
+            color: var(--orange);
+            border-radius: 100px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            background: white;
+            transition: all 0.2s;
+        }
+
+        .view-all-btn:hover { background: var(--orange); color: white; }
+
+        /* ── SECTIONS ── */
+        .section { padding: 5rem 1.5rem; }
+        .section-alt { background: var(--orange-pale); }
+
+        .section-header { text-align: center; margin-bottom: 3.5rem; }
+
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            margin-bottom: 0.75rem;
+        }
+
+        .section-header p { color: var(--gray); max-width: 500px; margin: 0 auto; }
+
+        /* ── STEPS ── */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 940px;
+            margin: 0 auto;
+        }
+
+        .step-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 36px rgba(0,0,0,0.1);
+        }
+
+        .step-icon { font-size: 2.5rem; margin-bottom: 0.75rem; display: block; }
+
+        .step-number {
+            display: inline-block;
+            background: var(--orange-light);
+            color: var(--orange-dark);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.25rem 0.65rem;
+            border-radius: 100px;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .step-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-card p { color: var(--gray); font-size: 0.875rem; line-height: 1.65; }
+
+        /* ── PLATFORM INFO GRID ── */
+        .token-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.25rem;
+            max-width: 820px;
+            margin: 0 auto;
+        }
+
+        .token-card {
+            background: white;
+            border-radius: 1.25rem;
+            padding: 1.5rem;
+            border: 1.5px solid var(--orange-light);
+            transition: border-color 0.2s;
+        }
+
+        .token-card:hover { border-color: var(--orange); }
+
+        .token-card-label {
+            font-size: 0.72rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.35rem;
+        }
+
+        .token-card-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--dark);
+            word-break: break-all;
+        }
+
+        .token-card-sub { font-size: 0.78rem; color: var(--gray); margin-top: 0.25rem; }
+
+        /* ── LIST ITEM PANEL ── */
+        #list-section {
+            max-width: 520px;
+            margin: 3rem auto 0;
+            background: white;
+            border-radius: 2rem;
+            padding: 2.5rem;
+            box-shadow: 0 6px 48px rgba(249, 115, 22, 0.14);
+            border: 1.5px solid var(--orange-light);
+            display: none;
+        }
+
+        #list-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.4rem;
+            text-align: center;
+        }
+
+        .list-sub {
+            text-align: center;
+            color: var(--gray);
+            font-size: 0.85rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .form-group { margin-bottom: 1.25rem; }
+
+        .form-label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 0.75rem;
+            font-size: 0.875rem;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: border-color 0.2s;
+            color: var(--dark);
+        }
+
+        .form-input:focus { border-color: var(--orange); }
+
+        .pill-selector { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+        .pill-option {
+            padding: 0.4rem 0.85rem;
+            border-radius: 100px;
+            border: 1.5px solid #e5e7eb;
+            background: white;
+            font-size: 0.78rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .pill-option.active, .pill-option:hover {
+            border-color: var(--orange);
+            color: var(--orange-dark);
+            background: var(--orange-pale);
+        }
+
+        .price-input-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .price-input-row .form-input { flex: 1; }
+
+        .trvx-equiv {
+            font-size: 0.8rem;
+            color: var(--orange-dark);
+            font-weight: 600;
+            white-space: nowrap;
+            background: var(--orange-pale);
+            padding: 0.7rem 0.85rem;
+            border-radius: 0.75rem;
+            min-width: 90px;
+            text-align: center;
+        }
+
+        .ai-suggestion {
+            margin-top: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.78rem;
+            color: var(--green);
+            background: var(--green-light);
+            padding: 0.45rem 0.75rem;
+            border-radius: 0.65rem;
+        }
+
+        .fee-note {
+            font-size: 0.76rem;
+            color: var(--gray);
+            background: #f9fafb;
+            padding: 0.65rem 0.85rem;
+            border-radius: 0.65rem;
+            margin-bottom: 1.25rem;
+            border: 1px solid #f1f5f9;
+        }
+
+        .list-btn {
+            width: 100%;
+            background: var(--orange);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 100px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .list-btn:hover { background: var(--orange-dark); transform: translateY(-1px); }
+
+        /* ── SMART CONTRACT FLOW ── */
+        .flow-container { max-width: 680px; margin: 0 auto; }
+
+        .flow-step { display: flex; gap: 1.25rem; align-items: flex-start; }
+
+        .flow-icon-wrap {
+            flex-shrink: 0;
+            width: 50px; height: 50px;
+            background: var(--orange-light);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem;
+        }
+
+        .flow-content { padding-top: 0.2rem; }
+        .flow-content h4 { font-weight: 600; margin-bottom: 0.3rem; font-size: 1rem; }
+        .flow-content p  { color: var(--gray); font-size: 0.875rem; }
+
+        .flow-connector {
+            width: 2px;
+            height: 28px;
+            background: var(--orange-light);
+            margin-left: 24px;
+            margin-top: 4px;
+            margin-bottom: 4px;
+        }
+
+        /* ── TRUST GRID ── */
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
+            gap: 1.25rem;
+            max-width: 840px;
+            margin: 0 auto;
+        }
+
+        .trust-card {
+            background: white;
+            border-radius: 1.25rem;
+            padding: 1.5rem;
+            border: 1.5px solid #e5e7eb;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+
+        .trust-card:hover { border-color: var(--orange); transform: translateY(-3px); }
+
+        .trust-icon { font-size: 1.75rem; margin-bottom: 0.5rem; display: block; }
+
+        .trust-card h4 {
+            font-weight: 600;
+            margin-bottom: 0.35rem;
+            font-size: 0.95rem;
+        }
+
+        .trust-card p { color: var(--gray); font-size: 0.82rem; line-height: 1.6; }
+
+        /* ── ECO BANNER ── */
+        .eco-banner {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border-radius: 1.5rem;
+            padding: 2rem 2.5rem;
+            max-width: 820px;
+            margin: 3.5rem auto 0;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .eco-icon { font-size: 3rem; flex-shrink: 0; }
+
+        .eco-content h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: var(--dark);
+            margin-bottom: 0.3rem;
+        }
+
+        .eco-content p { color: #065f46; font-size: 0.875rem; }
+
+        .eco-stats {
+            margin-left: auto;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .eco-stat { text-align: center; }
+
+        .eco-stat-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--green);
+            display: block;
+        }
+
+        .eco-stat-label { font-size: 0.72rem; color: #065f46; text-transform: uppercase; letter-spacing: 0.06em; }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--dark);
+            color: #9ca3af;
+            text-align: center;
+            padding: 2.25rem 1.5rem;
+            font-size: 0.875rem;
+        }
+
+        footer strong { color: var(--orange); }
+        footer a { color: var(--orange); text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+
+        .footer-sub { margin-top: 0.5rem; font-size: 0.75rem; opacity: 0.7; }
+
+        /* ── TOAST ── */
+        #toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(120px);
+            background: var(--dark);
+            color: white;
+            padding: 0.875rem 1.75rem;
+            border-radius: 100px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            z-index: 9999;
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        #toast.show { transform: translateX(-50%) translateY(0); }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 640px) {
+            nav { padding: 0.875rem 1rem; }
+            .nav-brand { font-size: 1.2rem; }
+            .hero-stats { gap: 1.75rem; }
+            .token-grid { grid-template-columns: 1fr 1fr; }
+            .trust-grid { grid-template-columns: 1fr 1fr; }
+            .eco-banner { flex-direction: column; text-align: center; }
+            .eco-stats { margin-left: 0; justify-content: center; }
+            .listing-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 400px) {
+            .token-grid { grid-template-columns: 1fr; }
+            .trust-grid { grid-template-columns: 1fr; }
+            .listing-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav>
+    <div class="nav-brand">💎 Trovex</div>
+    <div class="nav-right">
+        <span id="network-badge">Polygon</span>
+        <span id="address-display">Public Address after login</span>
+        <button id="connect-btn-nav" onclick="connectWallet()">Connect Wallet</button>
+    </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+    <div class="hero-badge">💎 Web3 C2C · ERC-20 + ERC-721 Marketplace</div>
+    <h1>Tro<span>vex</span></h1>
+    <p class="hero-tagline">
+        Buy and sell second-hand goods peer-to-peer on the blockchain. Every item is minted as an NFT ownership certificate. Payments are held in escrow until delivery is confirmed — no trust needed.
+    </p>
+    <button id="hero-connect-btn" onclick="connectWallet()">Connect to Wallet</button>
+    <div id="hero-wallet-address">
+        <strong>Public Address:</strong>
+        <span id="hero-wallet-address-value"></span>
+    </div>
+    <div class="hero-stats">
+        <div class="stat">
+            <span class="stat-value">1,248</span>
+            <span class="stat-label">Items Listed</span>
+        </div>
+        <div class="stat">
+            <span class="stat-value">52%</span>
+            <span class="stat-label">Avg Discount</span>
+        </div>
+        <div class="stat">
+            <span class="stat-value">HK$50</span>
+            <span class="stat-label">= 1 TRVX</span>
+        </div>
+        <div class="stat">
+            <span class="stat-value">892</span>
+            <span class="stat-label">Trades Done</span>
+        </div>
+    </div>
+</section>
+
+<!-- ══ PROGRESS ══ -->
+<section class="progress-section">
+    <div class="progress-container">
+        <div class="progress-labels">
+            <span>892 items sold this month</span>
+            <span>356 new listings today</span>
+        </div>
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill"></div>
+        </div>
+        <p class="progress-text">HK$78,450 traded of HK$100,000 monthly goal · 78%</p>
+    </div>
+</section>
+
+<!-- ══ FEATURED LISTINGS ══ -->
+<section class="listings-section section-alt">
+    <div class="listings-header">
+        <h2>🔥 Featured Listings</h2>
+        <p>All items SSI-verified · Ownership certified as ERC-721 NFT on Polygon</p>
+    </div>
+
+    <div class="search-bar-wrap">
+        <input class="search-input" type="text" placeholder="Search for phones, clothes, cameras…" id="search-input">
+        <button class="search-btn" onclick="doSearch()">Search</button>
+    </div>
+
+    <div class="listing-grid">
+
+        <!-- Card 1 -->
+        <div class="listing-card">
+            <div class="listing-img-wrap img-electronics">📱</div>
+            <div class="listing-body">
+                <div class="listing-top-row">
+                    <span class="condition-tag cond-like-new">Like New</span>
+                    <span class="nft-tag">NFT #0041</span>
+                </div>
+                <div class="listing-title">iPhone 14 Pro 256GB</div>
+                <div class="listing-price">HK$3,200 <span>≈ 64 TRVX</span></div>
+                <div class="listing-original">Retail: HK$8,799 · Save 64%</div>
+                <div class="listing-meta">
+                    <span class="meta-badge meta-green">✓ SSI Verified</span>
+                    <span class="meta-badge meta-orange">⭐ 4.9 Seller</span>
+                </div>
+                <div class="listing-seller">Seller: 0x7f2e...b3a4</div>
+                <button class="buy-now-btn" onclick="buyItem('iPhone 14 Pro 256GB', 'HK$3,200')">Buy Now →</button>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="listing-card">
+            <div class="listing-img-wrap img-computer">💻</div>
+            <div class="listing-body">
+                <div class="listing-top-row">
+                    <span class="condition-tag cond-like-new">Like New</span>
+                    <span class="nft-tag">NFT #0098</span>
+                </div>
+                <div class="listing-title">MacBook Air M2 8GB/256GB</div>
+                <div class="listing-price">HK$7,500 <span>≈ 150 TRVX</span></div>
+                <div class="listing-original">Retail: HK$11,999 · Save 37%</div>
+                <div class="listing-meta">
+                    <span class="meta-badge meta-green">✓ SSI Verified</span>
+                    <span class="meta-badge meta-orange">⭐ 5.0 Seller</span>
+                </div>
+                <div class="listing-seller">Seller: 0x3a8b...c120</div>
+                <button class="buy-now-btn" onclick="buyItem('MacBook Air M2', 'HK$7,500')">Buy Now →</button>
+            </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="listing-card">
+            <div class="listing-img-wrap img-fashion">👟</div>
+            <div class="listing-body">
+                <div class="listing-top-row">
+                    <span class="condition-tag cond-good">Good</span>
+                    <span class="nft-tag">NFT #0207</span>
+                </div>
+                <div class="listing-title">Nike Air Jordan 1 Retro</div>
+                <div class="listing-price">HK$650 <span>≈ 13 TRVX</span></div>
+                <div class="listing-original">Retail: HK$1,299 · Save 50%</div>
+                <div class="listing-meta">
+                    <span class="meta-badge meta-green">✓ SSI Verified</span>
+                    <span class="meta-badge meta-orange">⭐ 4.7 Seller</span>
+                </div>
+                <div class="listing-seller">Seller: 0xf891...2d4e</div>
+                <button class="buy-now-btn" onclick="buyItem('Nike Air Jordan 1 Retro', 'HK$650')">Buy Now →</button>
+            </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="listing-card">
+            <div class="listing-img-wrap img-photo">📷</div>
+            <div class="listing-body">
+                <div class="listing-top-row">
+                    <span class="condition-tag cond-good">Good</span>
+                    <span class="nft-tag">NFT #0312</span>
+                </div>
+                <div class="listing-title">Sony A7 III Full-Frame</div>
+                <div class="listing-price">HK$9,800 <span>≈ 196 TRVX</span></div>
+                <div class="listing-original">Retail: HK$18,999 · Save 48%</div>
+                <div class="listing-meta">
+                    <span class="meta-badge meta-green">✓ SSI Verified</span>
+                    <span class="meta-badge meta-orange">⭐ 4.8 Seller</span>
+                </div>
+                <div class="listing-seller">Seller: 0x1c2d...8a5b</div>
+                <button class="buy-now-btn" onclick="buyItem('Sony A7 III', 'HK$9,800')">Buy Now →</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="view-all-wrap">
+        <button class="view-all-btn" onclick="showToast('📦 Full marketplace — coming soon on Polygon!')">View All 1,248 Listings →</button>
+    </div>
+</section>
+
+<!-- ══ HOW IT WORKS ══ -->
+<section class="section">
+    <div class="section-header">
+        <h2>How It Works</h2>
+        <p>Four simple steps from listing your item to getting paid — fully on-chain</p>
+    </div>
+    <div class="steps-grid">
+        <div class="step-card">
+            <span class="step-icon">📦</span>
+            <div class="step-number">Step 1</div>
+            <h3>List &amp; Mint</h3>
+            <p>Connect your wallet, describe your item, and set a price. AI suggests a market-rate price. An ERC-721 NFT is minted as your item's ownership certificate and deposited into the escrow smart contract.</p>
+        </div>
+        <div class="step-card">
+            <span class="step-icon">🛒</span>
+            <div class="step-number">Step 2</div>
+            <h3>Browse &amp; Buy</h3>
+            <p>Buyers browse SSI-verified listings. Purchase is made in eHKD, USDC, eCNY, or via FPS. Payment is locked in smart contract escrow. The NFT ownership certificate is held in the contract pending delivery.</p>
+        </div>
+        <div class="step-card">
+            <span class="step-icon">🚚</span>
+            <div class="step-number">Step 3</div>
+            <h3>Ship &amp; Scan</h3>
+            <p>Seller ships the item with a QR code. Upon delivery, the courier or buyer scans the QR code off-chain. A Chainlink oracle confirms the delivery event on-chain, triggering the next step automatically.</p>
+        </div>
+        <div class="step-card">
+            <span class="step-icon">✅</span>
+            <div class="step-number">Step 4</div>
+            <h3>Confirm &amp; Settle</h3>
+            <p>Buyer confirms receipt (or auto-confirms after 7 days). Smart contract releases funds: 97% to seller, 1.5% platform fee, 1.5% dispute reserve. The NFT transfers permanently to the buyer's wallet.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ══ PLATFORM DETAILS ══ -->
+<section class="section section-alt">
+    <div class="section-header">
+        <h2>Platform Details</h2>
+        <p>Trovex Token (TRVX) — ERC-20 payment token + ERC-721 item NFTs on Polygon</p>
+    </div>
+    <div class="token-grid">
+        <div class="token-card">
+            <div class="token-card-label">Platform Token</div>
+            <div class="token-card-value">Trovex Token</div>
+            <div class="token-card-sub">Symbol: TRVX · 1 TRVX = HK$50</div>
+        </div>
+        <div class="token-card">
+            <div class="token-card-label">Token Standards</div>
+            <div class="token-card-value">ERC-20 + ERC-721</div>
+            <div class="token-card-sub">FT (payment) + NFT (ownership)</div>
+        </div>
+        <div class="token-card">
+            <div class="token-card-label">Blockchain</div>
+            <div class="token-card-value">Polygon</div>
+            <div class="token-card-sub">Low-fee, eco-friendly PoS</div>
+        </div>
+        <div class="token-card">
+            <div class="token-card-label">Platform Fee</div>
+            <div class="token-card-value">1.5%</div>
+            <div class="token-card-sub">Auto-deducted per transaction</div>
+        </div>
+        <div class="token-card">
+            <div class="token-card-label">Accepted Payment</div>
+            <div class="token-card-value">Multi-Currency</div>
+            <div class="token-card-sub">eHKD, eCNY, USDC, Bitcoin, FPS</div>
+        </div>
+        <div class="token-card">
+            <div class="token-card-label">Smart Contract</div>
+            <div class="token-card-value" style="font-size:0.95rem;">Deployed via Thirdweb</div>
+            <div class="token-card-sub">Polygon Mumbai Testnet</div>
+        </div>
+    </div>
+
+    <!-- List Item Panel — revealed after wallet connect -->
+    <div id="list-section">
+        <h3>📦 List Your Item</h3>
+        <p class="list-sub">Describe your item · AI prices it · Mint its NFT · Go live on Polygon</p>
+
+        <div class="form-group">
+            <label class="form-label">Item Name</label>
+            <input class="form-input" type="text" id="item-name" placeholder="e.g. iPhone 14 Pro 256GB Space Black">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Category</label>
+            <div class="pill-selector" id="cat-selector">
+                <button class="pill-option active" onclick="selectPill(this,'cat')">📱 Electronics</button>
+                <button class="pill-option" onclick="selectPill(this,'cat')">💻 Computers</button>
+                <button class="pill-option" onclick="selectPill(this,'cat')">👗 Fashion</button>
+                <button class="pill-option" onclick="selectPill(this,'cat')">🎮 Gaming</button>
+                <button class="pill-option" onclick="selectPill(this,'cat')">🏠 Home</button>
+                <button class="pill-option" onclick="selectPill(this,'cat')">📚 Books</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Condition</label>
+            <div class="pill-selector" id="cond-selector">
+                <button class="pill-option active" onclick="selectPill(this,'cond')">✨ Like New</button>
+                <button class="pill-option" onclick="selectPill(this,'cond')">👍 Good</button>
+                <button class="pill-option" onclick="selectPill(this,'cond')">⚡ Fair</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Your Asking Price (eHKD)</label>
+            <div class="price-input-row">
+                <input class="form-input" type="number" id="item-price" placeholder="e.g. 3200" min="1" oninput="updateTRVX()">
+                <div class="trvx-equiv" id="trvx-equiv">≈ — TRVX</div>
+            </div>
+            <div class="ai-suggestion" id="ai-suggestion" style="display:none;">
+                🤖 AI suggests: HK$<span id="ai-price">—</span> based on recent Polygon listings
+            </div>
+        </div>
+
+        <div class="fee-note">
+            💡 Platform fee 1.5% deducted on sale · 1.5% held in dispute reserve for 7 days · Remaining 97% released to your wallet upon buyer confirmation.
+        </div>
+
+        <button class="list-btn" onclick="listItem()">Mint NFT &amp; List Item →</button>
+    </div>
+</section>
+
+<!-- ══ SMART CONTRACT FLOW ══ -->
+<section class="section">
+    <div class="section-header">
+        <h2>Smart Contract Flow</h2>
+        <p>Every transaction is automated and auditable on-chain — no human intermediary required</p>
+    </div>
+    <div class="flow-container">
+
+        <div class="flow-step">
+            <div class="flow-icon-wrap">🏷️</div>
+            <div class="flow-content">
+                <h4>Seller Lists Item — ERC-721 NFT Minted &amp; Escrowed</h4>
+                <p>Seller connects wallet and submits listing. AML check performed on seller's public key via Chainalysis. SSI/ZKP verification confirms seller identity without exposing personal data. An ERC-721 NFT representing item ownership is minted on Polygon and locked in the escrow smart contract. Item goes live on Trovex.</p>
+            </div>
+        </div>
+        <div class="flow-connector"></div>
+
+        <div class="flow-step">
+            <div class="flow-icon-wrap">🛒</div>
+            <div class="flow-content">
+                <h4>Buyer Purchases — eHKD Locked in Escrow</h4>
+                <p>Buyer pays via eHKD, USDC, eCNY, or FPS (Open Banking API/BaaS). AML check on buyer's wallet. Full purchase amount locked in escrow: <strong>97% reserved for seller</strong>, <strong>1.5% platform fee</strong>, <strong>1.5% dispute reserve</strong>. NFT remains in contract. Seller is notified on-chain to ship the item.</p>
+            </div>
+        </div>
+        <div class="flow-connector"></div>
+
+        <div class="flow-step">
+            <div class="flow-icon-wrap">📦</div>
+            <div class="flow-content">
+                <h4>Oracle Confirms Delivery — IoT / QR Scan Triggers Release</h4>
+                <p>Courier scans the item's QR code on delivery. The off-chain scan event is submitted to a Chainlink oracle. Oracle writes a signed delivery confirmation to the Polygon smart contract. Contract verifies the oracle signature and marks delivery as complete, unlocking the escrow settlement logic.</p>
+            </div>
+        </div>
+        <div class="flow-connector"></div>
+
+        <div class="flow-step">
+            <div class="flow-icon-wrap">✅</div>
+            <div class="flow-content">
+                <h4>Settlement or DAO Dispute Resolution</h4>
+                <p>Buyer confirms receipt (or auto-confirmation after 7 days): <strong>97% released to seller's wallet</strong>, <strong>1.5% platform fee</strong> retained, <strong>1.5% dispute reserve released to seller</strong>. NFT permanently transferred to buyer's wallet as proof of ownership. If buyer raises a dispute within 7 days, TRVX holders vote via <strong>DAO governance</strong> to adjudicate the outcome and distribute the escrow accordingly.</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ══ TRUST & PROTECTION ══ -->
+<section class="section section-alt">
+    <div class="section-header">
+        <h2>Trust &amp; Protection</h2>
+        <p>Trovex uses five layers of Web3 technology so buyers and sellers can transact without needing to trust each other</p>
+    </div>
+    <div class="trust-grid">
+        <div class="trust-card">
+            <span class="trust-icon">🛡️</span>
+            <h4>AML Screening</h4>
+            <p>Every wallet — buyer and seller — is screened via Chainalysis RegTech before any listing or transaction is approved on-chain.</p>
+        </div>
+        <div class="trust-card">
+            <span class="trust-icon">🪪</span>
+            <h4>SSI / ZKP Identity</h4>
+            <p>Self-Sovereign Identity and Zero-Knowledge Proof let users prove they are real, KYC-compliant HK residents without revealing any personal data to counterparties.</p>
+        </div>
+        <div class="trust-card">
+            <span class="trust-icon">🤖</span>
+            <h4>AI Fraud Detection</h4>
+            <p>AI algorithms scan listing descriptions, images, and on-chain wallet history to flag counterfeit items, suspicious pricing patterns, and repeat scam addresses before listing.</p>
+        </div>
+        <div class="trust-card">
+            <span class="trust-icon">🔗</span>
+            <h4>Chainlink Oracle</h4>
+            <p>Delivery confirmations are processed by decentralised Chainlink oracles. Funds are only released when a cryptographically signed delivery event is verified on-chain.</p>
+        </div>
+        <div class="trust-card">
+            <span class="trust-icon">⭐</span>
+            <h4>On-Chain Reputation</h4>
+            <p>Every completed trade writes a reputation score update to the blockchain. Scores are permanent, immutable, and visible to all. Bad actors cannot reset their history.</p>
+        </div>
+        <div class="trust-card">
+            <span class="trust-icon">⚖️</span>
+            <h4>DAO Dispute Resolution</h4>
+            <p>Disputes are resolved by TRVX token holders via on-chain governance voting. No single party controls the outcome — fully decentralised arbitration replaces traditional customer service.</p>
+        </div>
+    </div>
+
+    <!-- Eco Banner -->
+    <div class="eco-banner">
+        <div class="eco-icon">🌱</div>
+        <div class="eco-content">
+            <h4>Every Trade Saves the Planet</h4>
+            <p>Each second-hand transaction on Trovex avoids the carbon cost of manufacturing a new product. Our smart contract automatically records the estimated CO₂ saving on-chain for every trade.</p>
+        </div>
+        <div class="eco-stats">
+            <div class="eco-stat">
+                <span class="eco-stat-value">47.3t</span>
+                <span class="eco-stat-label">CO₂ Saved</span>
+            </div>
+            <div class="eco-stat">
+                <span class="eco-stat-value">892</span>
+                <span class="eco-stat-label">Green Trades</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+    <p>© Copyright <strong>Trovex</strong> · Powered by <a href="https://thirdweb.com" target="_blank">Thirdweb</a> · Built on Polygon · <a href="https://github.com" target="_blank">GitHub</a></p>
+    <p class="footer-sub">This is a Proof of Concept (POC) for academic purposes · Not financial advice · SBIF Assignment</p>
+</footer>
+
+<!-- ══ TOAST ══ -->
+<div id="toast">💎 Wallet connected!</div>
+
+<script>
+    // ─── State ───────────────────────────────────────────────
+    let walletConnected = false;
+    let userAddress     = null;
+    let walletSignature = null;
+    let selectedCat     = '📱 Electronics';
+    let selectedCond    = '✨ Like New';
+    const TRVX_RATE     = 50; // 1 TRVX = HK$50
+
+    // ─── AI Price Suggestions by category ───────────────────
+    const aiPriceRanges = {
+        '📱 Electronics': [800,  5000],
+        '💻 Computers':   [2000, 12000],
+        '👗 Fashion':      [80,   1500],
+        '🎮 Gaming':       [200,  3000],
+        '🏠 Home':         [50,   2000],
+        '📚 Books':        [20,   300],
+    };
+
+    // ─── Wallet Connection ───────────────────────────────────
+    async function connectWallet() {
+        if (walletConnected) {
+            showToast('Already connected: ' + truncate(userAddress));
+            return;
+        }
+
+        if (typeof window.ethereum === 'undefined') {
+            showToast('⚠️ MetaMask not detected. Install the extension and refresh.');
+            return;
+        }
+
+        try {
+            showToast('🔄 Connecting to MetaMask...');
+
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            await provider.send("eth_requestAccounts", []);
+            const signer  = provider.getSigner();
+            userAddress   = await signer.getAddress();
+            const network = await provider.getNetwork();
+
+            const signInMessage = `Sign in to Trovex\nWallet: ${userAddress}\nTime: ${new Date().toISOString()}`;
+            walletSignature = await signer.signMessage(signInMessage);
+
+            walletConnected = true;
+            renderConnectedUI(userAddress, network);
+            showToast('💎 Wallet connected and signed in!');
+
+            window.ethereum.on('accountsChanged', (accounts) => {
+                if (accounts.length > 0) {
+                    userAddress = accounts[0];
+                    walletSignature = null;
+                    renderConnectedUI(userAddress, null);
+                    showToast('Account switched: ' + truncate(userAddress));
+                } else {
+                    renderDisconnectedUI();
+                }
+            });
+
+            window.ethereum.on('chainChanged', () => window.location.reload());
+
+        } catch (err) {
+            if (err.code === 4001) {
+                showToast('❌ Connection cancelled by user');
+            } else {
+                showToast('❌ Error: ' + (err.message || '').slice(0, 50));
+            }
+        }
+    }
+
+    function renderConnectedUI(address, network) {
+        const addrEl = document.getElementById('address-display');
+        addrEl.textContent = truncate(address);
+        addrEl.style.display = 'block';
+
+        if (network) {
+            const badge = document.getElementById('network-badge');
+            badge.style.display = 'block';
+            badge.textContent   = network.name === 'unknown'
+                ? 'Chain ' + network.chainId
+                : network.name;
+        }
+
+        const navBtn = document.getElementById('connect-btn-nav');
+        navBtn.textContent = '✓ Connected';
+        navBtn.classList.add('connected');
+
+        const heroBtn = document.getElementById('hero-connect-btn');
+        heroBtn.textContent = '✓ Wallet Connected';
+        heroBtn.classList.add('connected');
+
+        document.getElementById('hero-wallet-address-value').textContent = address;
+        document.getElementById('hero-wallet-address').style.display = 'block';
+
+        const panel = document.getElementById('list-section');
+        panel.style.display = 'block';
+        setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300);
+    }
+
+    function renderDisconnectedUI() {
+        walletConnected = false;
+        userAddress     = null;
+        walletSignature = null;
+
+        document.getElementById('address-display').style.display = 'none';
+        document.getElementById('network-badge').style.display   = 'none';
+
+        const navBtn = document.getElementById('connect-btn-nav');
+        navBtn.textContent = 'Connect Wallet';
+        navBtn.classList.remove('connected');
+
+        const heroBtn = document.getElementById('hero-connect-btn');
+        heroBtn.textContent = 'Connect to Wallet';
+        heroBtn.classList.remove('connected');
+
+        document.getElementById('hero-wallet-address').style.display = 'none';
+        document.getElementById('hero-wallet-address-value').textContent = '';
+
+        document.getElementById('list-section').style.display = 'none';
+        showToast('👋 Wallet disconnected');
+    }
+
+    // ─── Buy Item ────────────────────────────────────────────
+    function buyItem(name, price) {
+        if (!walletConnected) {
+            showToast('🔗 Please connect your wallet to purchase!');
+            return;
+        }
+        showToast(`🛒 Initiating escrow for ${name} at ${price}…`);
+
+        // ── TODO: Real Thirdweb escrow contract call ─────────
+        // const sdk      = new ThirdwebSDK("polygon");
+        // const contract = await sdk.getContract("ESCROW_ADDRESS");
+        // await contract.call("purchaseItem", [itemNftId], { value: price });
+        // ────────────────────────────────────────────────────
+
+        setTimeout(() => showToast('✅ Escrow created! Check MetaMask to confirm'), 2200);
+    }
+
+    // ─── Pill selectors ──────────────────────────────────────
+    function selectPill(btn, group) {
+        const selector = group === 'cat' ? '#cat-selector' : '#cond-selector';
+        document.querySelectorAll(selector + ' .pill-option').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        if (group === 'cat') {
+            selectedCat = btn.textContent.trim();
+            updateAISuggestion();
+        } else {
+            selectedCond = btn.textContent.trim();
+        }
+    }
+
+    // ─── TRVX conversion ─────────────────────────────────────
+    function updateTRVX() {
+        const price = parseFloat(document.getElementById('item-price').value);
+        const equiv = document.getElementById('trvx-equiv');
+
+        if (!isNaN(price) && price > 0) {
+            equiv.textContent = '≈ ' + (price / TRVX_RATE).toFixed(1) + ' TRVX';
+            updateAISuggestion();
+        } else {
+            equiv.textContent = '≈ — TRVX';
+            document.getElementById('ai-suggestion').style.display = 'none';
+        }
+    }
+
+    function updateAISuggestion() {
+        const price = parseFloat(document.getElementById('item-price').value);
+        if (isNaN(price) || price <= 0) return;
+
+        const range     = aiPriceRanges[selectedCat] || [100, 5000];
+        const suggested = Math.max(range[0], Math.min(range[1], Math.round(price * 0.92)));
+
+        const aiSug = document.getElementById('ai-suggestion');
+        document.getElementById('ai-price').textContent = suggested.toLocaleString();
+        aiSug.style.display = 'flex';
+    }
+
+    // ─── List Item ───────────────────────────────────────────
+    function listItem() {
+        if (!walletConnected) {
+            showToast('Please connect your wallet first!');
+            return;
+        }
+        const name  = document.getElementById('item-name').value.trim();
+        const price = parseFloat(document.getElementById('item-price').value);
+
+        if (!name) {
+            showToast('⚠️ Please enter an item name');
+            return;
+        }
+        if (isNaN(price) || price <= 0) {
+            showToast('⚠️ Please enter a valid price');
+            return;
+        }
+
+        const trvx = (price / TRVX_RATE).toFixed(1);
+        showToast(`🎨 Minting NFT for "${name}" at HK$${price} (${trvx} TRVX)…`);
+
+        // ── TODO: Real Thirdweb NFT mint + listing call ───────
+        // const sdk         = new ThirdwebSDK("polygon");
+        // const nftContract = await sdk.getContract("NFT_ADDRESS", "nft-collection");
+        // await nftContract.mintTo(userAddress, { name, price });
+        // ────────────────────────────────────────────────────
+
+        setTimeout(() => showToast('✅ NFT minted! Item is live on Trovex'), 2200);
+    }
+
+    // ─── Search ──────────────────────────────────────────────
+    function doSearch() {
+        const q = document.getElementById('search-input').value.trim();
+        if (!q) { showToast('🔍 Enter a keyword to search'); return; }
+        showToast(`🔍 Searching Polygon for "${q}"…`);
+        setTimeout(() => showToast('📦 1,248 results found — full search coming soon!'), 1800);
+    }
+
+    // ─── Helpers ─────────────────────────────────────────────
+    function truncate(addr) {
+        if (!addr) return '';
+        return addr.slice(0, 6) + '...' + addr.slice(-4);
+    }
+
+    let _toastTimer;
+    function showToast(msg) {
+        const el = document.getElementById('toast');
+        el.textContent = msg;
+        el.classList.add('show');
+        clearTimeout(_toastTimer);
+        _toastTimer = setTimeout(() => el.classList.remove('show'), 3500);
+    }
+</script>
+
+</body>
+</html>
